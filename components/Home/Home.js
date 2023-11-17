@@ -1,20 +1,22 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import GeoMetaIconM from "../../ui/svg/GeoMetaIconM";
+import { View, StyleSheet, FlatList } from "react-native";
 import Welcome from "./Welcome";
-import Continents from "./Continents";
-import Quiz from "./Quiz";
-import Forum from "./Forum";
+import { data } from "../../util/home-data";
+import AboutItem from "./AboutItem";
 
 const Home = () => {
+  const renderAboutItem = (data) => {
+    return <AboutItem styles={styles} data={data.item} />;
+  };
   return (
-    <ScrollView style={styles.scrollContainer}>
-      <View style={styles.homeContainer}>
-        <Welcome styles={styles} />
-        <Continents styles={styles} />
-        <Quiz styles={styles} />
-        <Forum styles={styles} />
-      </View>
-    </ScrollView>
+    <View style={styles.scrollContainer}>
+      <FlatList
+        data={data}
+        renderItem={renderAboutItem}
+        keyExtractor={(item) => item.id}
+        ListHeaderComponent={<Welcome styles={styles} />}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   );
 };
 
@@ -23,12 +25,8 @@ export default Home;
 const styles = StyleSheet.create({
   scrollContainer: {
     backgroundColor: "#7131B7",
-    paddingVertical: 40,
+    paddingBottom: 40,
     paddingHorizontal: 30,
-    // alignItems: "center",
-    // justifyContent: "center",
-  },
-  homeContainer: {
     flex: 1,
     justifyContent: "center",
   },

@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
-import GeoMetaIconM from "../../ui/svg/GeoMetaIconM";
 import GeoMetaIconL from "../../ui/svg/GeoMetaIconL";
 const Welcome = ({ styles }) => {
   return (
