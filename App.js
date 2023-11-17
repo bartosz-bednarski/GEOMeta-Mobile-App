@@ -1,40 +1,55 @@
 import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./screens/HomeScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import MainBottomTabsNav from "./navigators/MainBottomTabsNav";
 import HeaderIcon from "./ui/HeaderIcon";
+import AuthNavigator from "./navigators/AuthNavigator";
 export default function App() {
-  const Stack = createNativeStackNavigator();
+  const BottomTabs = createBottomTabNavigator();
   return (
     <>
       <StatusBar style="light" />
       <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
+        <BottomTabs.Navigator
+          screenOptions={({ navigation }) => ({
             headerStyle: { backgroundColor: "#7B41BB" },
             headerTintColor: "white",
-          }}
+            tabBarStyle: { backgroundColor: "#7B41BB" },
+            tabBarActiveTintColor: "#ffd700",
+            headerRight: () => {
+              <Ionicons name="home" size={20} color="white" />;
+            },
+          })}
         >
-          <Stack.Screen
-            name="MainBottomTabsNav"
-            component={MainBottomTabsNav}
+          <BottomTabs.Screen
+            name="Home"
+            component={HomeScreen}
             options={{
+              headerTitle: "Główna",
+              tabBarIcon: ({ color, size }) => {
+                return <Ionicons name="home" size={size} color={color} />;
+              },
               headerRight: () => {
                 return <HeaderIcon />;
               },
+              headerTintColor: "transparent",
             }}
-            // options={{
-            //   headerTitle: () => {
-            //     <HeaderIcon />;
-            //   },
-            // }}
-            // options={{ headerShown: false }}
           />
-        </Stack.Navigator>
+          <BottomTabs.Screen
+            name="Profile"
+            component={AuthNavigator}
+            options={{
+              title: "Profil",
+              tabBarIcon: ({ color, size }) => {
+                return <Ionicons name="person" color={color} size={size} />;
+              },
+              headerShown: false,
+            }}
+          />
+        </BottomTabs.Navigator>
       </NavigationContainer>
     </>
   );

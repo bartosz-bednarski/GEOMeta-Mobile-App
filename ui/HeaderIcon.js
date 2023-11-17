@@ -19,9 +19,12 @@ export default HeaderIcon;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   imgBox: {
     marginLeft: "auto",
+    marginRight: 20,
   },
   //   img: {
   //     width: 100,
