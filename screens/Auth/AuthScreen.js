@@ -6,7 +6,12 @@ const AuthScreen = ({ route, navigation }) => {
     <View style={styles.authContainer}>
       <GeoMetaIconL />
       <Image source={require("../../assets/world.png")} style={styles.image} />
-      <Button title="Zaloguj się" />
+      <Button
+        title="Zaloguj się"
+        onPress={() => {
+          navigation.navigate("Login");
+        }}
+      />
       <Button
         title="Utwórz Konto"
         onPress={() => {
