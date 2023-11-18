@@ -1,21 +1,14 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { useState, useEffect } from "react";
-import Input from "../../ui/Input";
 import Button from "../../ui/Button";
-import { KeyboardAvoidingView } from "react-native-web";
-const RegisterScreen = () => {
+const LoginScreen = () => {
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [usernameWarning, setUsernameWarning] = useState({
     status: false,
     message: "",
   });
   const [passwordWarning, setPasswordWarning] = useState({
-    status: false,
-    message: "",
-  });
-  const [emailWarning, setEmailWarning] = useState({
     status: false,
     message: "",
   });
@@ -26,10 +19,7 @@ const RegisterScreen = () => {
     if (password.length >= 6) {
       setPasswordWarning({ status: false, message: "" });
     }
-    if (email.length > 0) {
-      setEmailWarning({ status: false, message: "" });
-    }
-  }, [username, password, email]);
+  }, [username, password]);
   const submitHandler = () => {
     if (username.length === 0) {
       setUsernameWarning({
@@ -37,15 +27,12 @@ const RegisterScreen = () => {
         message: "Uzupełnij nazwę użytkownika",
       });
     }
-    if (email.length === 0) {
-      setEmailWarning({ status: true, message: "Uzupełnij email" });
-    }
     if (password.length < 6) {
       setPasswordWarning({ status: true, message: "Hasło jest za krótkie" });
     }
   };
   return (
-    <View style={styles.registerContainer}>
+    <View style={styles.loginContainer}>
       <Text style={styles.label}>Użytkownik</Text>
       <TextInput
         style={styles.input}
@@ -58,19 +45,6 @@ const RegisterScreen = () => {
       />
       {usernameWarning.status && (
         <Text style={styles.warningMessage}>{usernameWarning.message}</Text>
-      )}
-      <Text style={styles.label}>E-mail</Text>
-      <TextInput
-        style={styles.input}
-        underlineColorAndroid="transparent"
-        autoCorrect={false}
-        keyboardType="default"
-        textContentType="emailAddress"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-      />
-      {emailWarning.status && (
-        <Text style={styles.warningMessage}>{emailWarning.message}</Text>
       )}
       <Text style={styles.label}>Hasło</Text>
       <TextInput
@@ -89,12 +63,12 @@ const RegisterScreen = () => {
       {passwordWarning.status && (
         <Text style={styles.warningMessage}>{passwordWarning.message}</Text>
       )}
-      <Button title="Utwórz konto" onPress={submitHandler} />
+      <Button title="Zaloguj się" onPress={submitHandler} />
     </View>
   );
 };
 const styles = StyleSheet.create({
-  registerContainer: {
+  loginContainer: {
     backgroundColor: "#7131B7",
     paddingBottom: 40,
     paddingHorizontal: 30,
@@ -126,4 +100,4 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
-export default RegisterScreen;
+export default LoginScreen;

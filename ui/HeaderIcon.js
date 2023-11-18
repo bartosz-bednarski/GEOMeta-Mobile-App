@@ -4,9 +4,9 @@ import { StyleSheet } from "react-native";
 import icon from "../assets/GEOMeta.svg";
 import GeoMetaIconS from "./svg/GeoMetaIconS";
 
-const HeaderIcon = () => {
+const HeaderIcon = ({ navType }) => {
   return (
-    <View style={styles.container}>
+    <View style={navType === "stack" ? styles.stackImgBox : styles.imgBox}>
       <View style={styles.imgBox}>
         <GeoMetaIconS />
       </View>
@@ -24,7 +24,11 @@ const styles = StyleSheet.create({
   },
   imgBox: {
     marginLeft: "auto",
-    marginRight: 20,
+    marginRight: 16,
+  },
+  stackImgBox: {
+    marginLeft: "auto",
+    marginRight: 0,
   },
   //   img: {
   //     width: 100,
