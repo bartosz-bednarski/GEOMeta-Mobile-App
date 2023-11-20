@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   authContainer: {
     backgroundColor: "#7131B7",
     paddingBottom: 40,
-    paddingHorizontal: 30,
+    paddingTop: 30,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",

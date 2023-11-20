@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import Input from "../../ui/Input";
 import Button from "../../ui/Button";
 import { KeyboardAvoidingView } from "react-native-web";
-const RegisterScreen = () => {
+import LoaderOverlay from "../../ui/LoaderOverlay";
+const RegisterScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,6 +20,7 @@ const RegisterScreen = () => {
     status: false,
     message: "",
   });
+  const [isFetching, setIsFetching] = useState(false);
   useEffect(() => {
     if (username.length > 0) {
       setUsernameWarning({ status: false, message: "" });
@@ -30,7 +32,7 @@ const RegisterScreen = () => {
       setEmailWarning({ status: false, message: "" });
     }
   }, [username, password, email]);
-  const submitHandler = () => {
+  const submitHandler = async () => {
     if (username.length === 0) {
       setUsernameWarning({
         status: true,
@@ -43,12 +45,78 @@ const RegisterScreen = () => {
     if (password.length < 6) {
       setPasswordWarning({ status: true, message: "Hasło jest za krótkie" });
     }
+    if (username.length > 0 && password.length >= 6 && email.length > 0) {
+      setIsFetching(true);
+      const randomColor = `#${Math.floor(Math.random() * 16777215).toString(
+        16
+      )}`;
+
+      const response = await fetch(
+        "https://geo-meta-rest-api.vercel.app/api/users/register",
+        {
+          method: "POST",
+          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: "same-origin", // include, *same-origin, omit
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username,
+            email: email,
+            password: password,
+            iconBackgroundColor: randomColor,
+          }),
+        }
+      );
+      const data = await response.json();
+      setIsFetching(false);
+      if (data.message === "Login,password or email too short") {
+        setUsernameWarning({
+          status: true,
+          message: "Uzupełnij nazwę użytkownika",
+        });
+        setEmailWarning({ status: true, message: "Uzupełnij email" });
+        setPasswordWarning({ status: true, message: "Hasło jest za krótkie" });
+      }
+      if (data.message === "Username already exists!") {
+        setUsernameWarning({
+          status: true,
+          message: "Podana nazwa użytkownika jest zajęta",
+        });
+        setUsername("");
+      }
+      if (data.message === "Email already exists!") {
+        setEmailWarning({
+          status: true,
+          message: "Istnieje już konto na podany adres e-mail",
+        });
+        setEmail("");
+      }
+      if (data.message === "registered") {
+        navigation.navigate("Login");
+      }
+    }
   };
+  if (isFetching) {
+    return <LoaderOverlay />;
+  }
   return (
     <View style={styles.registerContainer}>
-      <Text style={styles.label}>Użytkownik</Text>
+      <Text
+        style={
+          usernameWarning.status
+            ? [styles.label, styles.labelWarning]
+            : styles.label
+        }
+      >
+        Użytkownik
+      </Text>
       <TextInput
-        style={styles.input}
+        style={
+          usernameWarning.status
+            ? [styles.input, styles.inputWarning]
+            : styles.input
+        }
         underlineColorAndroid="transparent"
         autoCorrect={false}
         keyboardType="default"
@@ -59,9 +127,21 @@ const RegisterScreen = () => {
       {usernameWarning.status && (
         <Text style={styles.warningMessage}>{usernameWarning.message}</Text>
       )}
-      <Text style={styles.label}>E-mail</Text>
+      <Text
+        style={
+          emailWarning.status
+            ? [styles.label, styles.labelWarning]
+            : styles.label
+        }
+      >
+        E-mail
+      </Text>
       <TextInput
-        style={styles.input}
+        style={
+          emailWarning.status
+            ? [styles.input, styles.inputWarning]
+            : styles.input
+        }
         underlineColorAndroid="transparent"
         autoCorrect={false}
         keyboardType="default"
@@ -72,9 +152,21 @@ const RegisterScreen = () => {
       {emailWarning.status && (
         <Text style={styles.warningMessage}>{emailWarning.message}</Text>
       )}
-      <Text style={styles.label}>Hasło</Text>
+      <Text
+        style={
+          passwordWarning.status
+            ? [styles.label, styles.labelWarning]
+            : styles.label
+        }
+      >
+        Hasło
+      </Text>
       <TextInput
-        style={styles.input}
+        style={
+          passwordWarning.status
+            ? [styles.input, styles.inputWarning]
+            : styles.input
+        }
         underlineColorAndroid="transparent"
         autoCorrect={false}
         keyboardType="default"
@@ -111,6 +203,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
   },
+  labelWarning: {
+    color: "#de350b",
+  },
   input: {
     width: "100%",
     height: 40,
@@ -118,6 +213,11 @@ const styles = StyleSheet.create({
     color: "white",
     borderRadius: 5,
     backgroundColor: "#9264C6",
+  },
+  inputWarning: {
+    backgroundColor: "#de350b99",
+    borderWidth: 1,
+    borderColor: "#de350b",
   },
   warningMessage: {
     color: "red",
