@@ -2,7 +2,7 @@ import { View, StyleSheet, FlatList } from "react-native";
 import Welcome from "./Welcome";
 import { data } from "../../util/home-data";
 import AboutItem from "./AboutItem";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Home = () => {
   const renderAboutItem = (data) => {
     return <AboutItem styles={styles} data={data.item} />;
