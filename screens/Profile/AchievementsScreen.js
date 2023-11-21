@@ -1,9 +1,12 @@
 import { Text, View, StyleSheet } from "react-native";
+import QuizScoreTab from "../../components/Profile/QuizScoreTab";
 
 const AchievementsScreen = () => {
   return (
     <View style={styles.achievementsContainer}>
-      <Text>Achievements screen</Text>
+      <QuizScoreTab quizType="Flagi" score={100} gamesPlayed={10} />
+      <QuizScoreTab quizType="Herby" score={100} gamesPlayed={10} />
+      <QuizScoreTab quizType="Rejestracje" score={100} gamesPlayed={10} />
     </View>
   );
 };
@@ -13,7 +16,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     paddingTop: 30,
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
   },
 });
