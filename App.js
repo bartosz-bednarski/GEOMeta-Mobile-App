@@ -21,7 +21,7 @@ export default function App() {
       title: `${authStatus ? username : "Profil"}`,
       tabBarIcon: ({ color, size }) => {
         if (authStatus) {
-          return <UsernameIcon />;
+          return <UsernameIcon size="sm" />;
         } else {
           return <Ionicons name={"person"} color={color} size={size} />;
         }

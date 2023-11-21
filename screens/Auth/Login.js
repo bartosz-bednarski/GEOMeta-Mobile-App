@@ -54,7 +54,6 @@ const LoginScreen = ({ navigation }) => {
       const data = await response.json();
       setIsFetching(false);
 
-      console.log(data);
       if (data.message === "Login or password too short") {
         setUsernameWarning({
           status: true,
