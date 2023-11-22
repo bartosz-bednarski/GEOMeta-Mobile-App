@@ -31,10 +31,14 @@ const authStatusSlice = createSlice({
     changeUsernameShort: (state, action) => {
       state.usernameShort = action.payload;
     },
+    updateAccessToken: (state, action) => {
+      state.accessToken = action.payload;
+    },
   },
 });
 
 export const login = authStatusSlice.actions.login;
 export const logout = authStatusSlice.actions.logout;
 export const changeShortname = authStatusSlice.actions.changeUsernameShort;
+export const updateAccessToken = authStatusSlice.actions.updateAccessToken;
 export default authStatusSlice.reducer;
