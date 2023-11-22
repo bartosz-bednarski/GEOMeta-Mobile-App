@@ -11,6 +11,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import achievementsReducer from "./achievements-reducer";
 
 const persistConfig = {
   key: "root",
@@ -23,6 +24,7 @@ const persistedAuthorizationReducer = persistReducer(
 export const store = configureStore({
   reducer: {
     authorization: persistedAuthorizationReducer,
+    achievements: achievementsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
