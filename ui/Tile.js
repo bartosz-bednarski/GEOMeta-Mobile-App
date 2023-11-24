@@ -1,15 +1,19 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-const Tile = ({ onPress, icon, header, color }) => {
+const Tile = ({ onPress, icon, header, color, content, image, id }) => {
   return (
     <View style={styles.tileContainer}>
       <Pressable
         style={({ pressed }) =>
           !pressed ? styles.tileBox : [styles.tileBox, styles.tileBoxPressed]
         }
+        id={id}
         onPress={onPress}
       >
-        <Ionicons name={icon} color={color} size={100} />
+        {content === "icon" && (
+          <Ionicons name={icon} color={color} size={100} />
+        )}
+        {content === "image" && <Image style={[styles.image]} source={image} />}
       </Pressable>
       <Text style={styles.header}>{header}</Text>
     </View>
@@ -27,6 +31,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 15,
+  },
+  image: {
+    width: 140,
+    height: 140,
+    resizeMode: "contain",
   },
   tileBoxPressed: {
     opacity: 0.5,

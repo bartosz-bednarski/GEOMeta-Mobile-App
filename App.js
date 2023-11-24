@@ -12,6 +12,7 @@ import { persistor, store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import UsernameIcon from "./ui/UsernameIcon";
 import ProfileNavigator from "./navigators/ProfileNavigator";
+import DataNavigator from "./navigators/DataNavigator";
 export default function App() {
   const displayProfileIcon = () => {
     const authStatus = useSelector((state) => state.authorization.loggedIn);
@@ -49,8 +50,12 @@ export default function App() {
               screenOptions={({ navigation }) => ({
                 headerStyle: { backgroundColor: "#7B41BB" },
                 headerTintColor: "white",
-                tabBarStyle: { backgroundColor: "#7B41BB" },
+                tabBarStyle: {
+                  backgroundColor: "#7B41BB",
+                  borderBlockColor: "transparent",
+                },
                 tabBarActiveTintColor: "#ffd700",
+
                 headerRight: () => {
                   <Ionicons name="home" size={20} color="white" />;
                 },
@@ -70,7 +75,16 @@ export default function App() {
                   headerTintColor: "transparent",
                 }}
               />
-
+              <BottomTabs.Screen
+                name="Data"
+                component={DataNavigator}
+                options={{
+                  tabBarIcon: ({ color, size }) => {
+                    return <Ionicons name="bulb" size={size} color={color} />;
+                  },
+                  headerShown: false,
+                }}
+              />
               <BottomTabs.Screen
                 name="Auth"
                 component={DisplayProfileComponent}

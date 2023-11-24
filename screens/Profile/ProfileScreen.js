@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Button } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/authStatus-reducer";
-import Tile from "./Tile";
+import Tile from "../../ui/Tile";
 const ProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const logoutHandler = async () => {
@@ -18,12 +18,14 @@ const ProfileScreen = ({ navigation }) => {
       <View style={styles.rowContainer}>
         <Tile
           icon="person"
+          content="icon"
           color="#44B6C6"
           header="Dane użytkownika"
           onPress={() => navigation.navigate("Personal")}
         />
         <Tile
           icon="lock-closed"
+          content="icon"
           color="#44B6C6"
           header="Hasło"
           onPress={() => navigation.navigate("Password")}
@@ -32,12 +34,14 @@ const ProfileScreen = ({ navigation }) => {
       <View style={styles.rowContainer}>
         <Tile
           icon="trophy"
+          content="icon"
           color="#44B6C6"
           header="Osiągnięcia"
           onPress={() => navigation.navigate("Achievements")}
         />
         <Tile
           icon="power"
+          content="icon"
           color="red"
           header="Wyloguj się"
           onPress={logoutHandler}
