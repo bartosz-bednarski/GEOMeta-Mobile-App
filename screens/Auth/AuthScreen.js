@@ -11,9 +11,11 @@ const AuthScreen = ({ route, navigation }) => {
         onPress={() => {
           navigation.navigate("Login");
         }}
+        color="purple"
       />
       <Button
         title="Utwórz Konto"
+        color="purple"
         onPress={() => {
           navigation.navigate("Register");
         }}

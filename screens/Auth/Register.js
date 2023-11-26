@@ -4,6 +4,7 @@ import Input from "../../ui/Input";
 import Button from "../../ui/Button";
 import { KeyboardAvoidingView } from "react-native-web";
 import LoaderOverlay from "../../ui/LoaderOverlay";
+import GeoMetaIconL from "../../ui/svg/GeoMetaIconL";
 const RegisterScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -102,6 +103,7 @@ const RegisterScreen = ({ navigation }) => {
   }
   return (
     <View style={styles.registerContainer}>
+      <GeoMetaIconL />
       <Text
         style={
           usernameWarning.status
@@ -173,6 +175,7 @@ const RegisterScreen = ({ navigation }) => {
         textContentType="password"
         secureTextEntry={true}
         value={password}
+        placeholderTextColor="white"
         onChangeText={(text) => {
           setPassword(text);
         }}
@@ -181,7 +184,7 @@ const RegisterScreen = ({ navigation }) => {
       {passwordWarning.status && (
         <Text style={styles.warningMessage}>{passwordWarning.message}</Text>
       )}
-      <Button title="Utwórz konto" onPress={submitHandler} />
+      <Button title="Utwórz konto" onPress={submitHandler} color="purple" />
     </View>
   );
 };

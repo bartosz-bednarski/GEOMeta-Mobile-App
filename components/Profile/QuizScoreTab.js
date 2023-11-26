@@ -23,7 +23,7 @@ const QuizScoreTab = ({ quizType, score, gamesPlayed }) => {
 };
 const styles = StyleSheet.create({
   tabContainer: {
-    backgroundColor: "#7B41BB",
+    backgroundColor: "#E8D7FC",
     borderRadius: 20,
     width: "100%",
     paddingHorizontal: 15,
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 20,
+    elevation: 10,
   },
   rowContainer: {
     width: "100%",
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   label: {
-    color: "#CAAFE8",
+    color: "#7131B7",
     fontSize: 16,
     width: "100%",
     textAlign: "left",
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#9264C6",
   },
   scoreText: {
-    color: "#CAAFE8",
+    color: "#7131B7",
     fontSize: 16,
     textAlign: "left",
   },

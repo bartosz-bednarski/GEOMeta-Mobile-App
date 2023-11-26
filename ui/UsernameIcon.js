@@ -36,6 +36,8 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
+    elevation: 10,
+    shadowColor: "black",
   },
   text: {
     fontSize: 12,

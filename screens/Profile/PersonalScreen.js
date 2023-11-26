@@ -101,13 +101,14 @@ const PersonalScreen = ({ navigation }) => {
           keyboardType="default"
           textContentType="username"
           placeholder="max 2 znaki"
+          placeholderTextColor="white"
           value={shortName}
           onChangeText={(text) => setShortName(text)}
         />
         {shortNameWarning.status && (
           <Text style={styles.warningMessage}>{shortNameWarning.message}</Text>
         )}
-        <Button title="Zatwierdź" onPress={submitHandler} />
+        <Button title="Zatwierdź" color="purple" onPress={submitHandler} />
       </View>
     </View>
   );
@@ -117,12 +118,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#7131B7",
     paddingBottom: 40,
     paddingTop: 30,
+    paddingHorizontal: 30,
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
   },
   tabContainer: {
-    backgroundColor: "#7B41BB",
+    backgroundColor: "#E8D7FC",
     borderRadius: 20,
     width: "100%",
     paddingHorizontal: 15,
@@ -130,21 +132,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 20,
+    elevation: 10,
   },
   username: {
-    color: "#CAAFE8",
+    color: "#7131B7",
     fontSize: 24,
     fontWeight: "600",
     marginTop: 5,
   },
   email: {
-    color: "#CAAFE8",
+    color: "#7131B7",
     fontSize: 16,
     marginTop: 5,
   },
   label: {
-    color: "#CAAFE8",
-    fontSize: 16,
+    color: "#7131B7",
+    fontSize: 14,
     width: "100%",
     textAlign: "left",
   },
@@ -158,7 +161,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   labelWarning: {
-    color: "#de350b",
+    color: "red",
   },
   inputWarning: {
     backgroundColor: "#de350b99",

@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./screens/HomeScreen";
 import { Ionicons } from "@expo/vector-icons";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import HeaderIcon from "./ui/HeaderIcon";
 import AuthNavigator from "./navigators/AuthNavigator";
 import { Provider, useSelector } from "react-redux";
@@ -14,6 +14,8 @@ import UsernameIcon from "./ui/UsernameIcon";
 import ProfileNavigator from "./navigators/ProfileNavigator";
 import DataNavigator from "./navigators/DataNavigator";
 export default function App() {
+  const navTheme = DefaultTheme;
+  navTheme.colors.background = "#7131B7";
   const displayProfileIcon = () => {
     const authStatus = useSelector((state) => state.authorization.loggedIn);
     const username = useSelector((state) => state.authorization.username);
@@ -45,7 +47,7 @@ export default function App() {
       <StatusBar style="light" />
       <Provider store={store}>
         <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
-          <NavigationContainer>
+          <NavigationContainer theme={navTheme}>
             <BottomTabs.Navigator
               screenOptions={({ navigation }) => ({
                 headerStyle: { backgroundColor: "#7B41BB" },
