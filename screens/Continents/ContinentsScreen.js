@@ -14,7 +14,10 @@ const ContinentsScreen = ({ navigation }) => {
           header="Europa"
           id="europe"
           onPress={() =>
-            navigation.navigate("Continent", { continentId: "europe" })
+            navigation.navigate("Continent", {
+              continentId: "europe",
+              header: "Europa",
+            })
           }
         />
         <Tile
@@ -23,7 +26,10 @@ const ContinentsScreen = ({ navigation }) => {
           header="Afryka"
           id="africa"
           onPress={() =>
-            navigation.navigate("Continent", { continentId: "africa" })
+            navigation.navigate("Continent", {
+              continentId: "africa",
+              header: "Afryka",
+            })
           }
         />
       </View>
@@ -34,7 +40,10 @@ const ContinentsScreen = ({ navigation }) => {
           header="Ameryka Północna"
           id="northAmerica"
           onPress={() =>
-            navigation.navigate("Continent", { continentId: "northAmerica" })
+            navigation.navigate("Continent", {
+              continentId: "northAmerica",
+              header: "Ameryka Północna",
+            })
           }
         />
         <Tile
@@ -43,7 +52,10 @@ const ContinentsScreen = ({ navigation }) => {
           header="Ameryka Południowa"
           id="southAmerica"
           onPress={() =>
-            navigation.navigate("Continent", { continentId: "southAmerica" })
+            navigation.navigate("Continent", {
+              continentId: "southAmerica",
+              header: "Ameryka Południowa",
+            })
           }
         />
       </View>
@@ -54,7 +66,10 @@ const ContinentsScreen = ({ navigation }) => {
           header="Azja"
           id="asia"
           onPress={() =>
-            navigation.navigate("Continent", { continentId: "asia" })
+            navigation.navigate("Continent", {
+              continentId: "asia",
+              header: "Azja",
+            })
           }
         />
         <Tile
@@ -63,7 +78,10 @@ const ContinentsScreen = ({ navigation }) => {
           header="Oceania"
           id="oceania"
           onPress={() =>
-            navigation.navigate("Continent", { continentId: "oceania" })
+            navigation.navigate("Continent", {
+              continentId: "oceania",
+              header: "Oceania",
+            })
           }
         />
       </View>

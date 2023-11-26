@@ -188,7 +188,7 @@ const PasswordScreen = () => {
         {responseWarning.status && (
           <Text style={styles.labelWarning}>{responseWarning.message}</Text>
         )}
-        <Button title="Zatwierdź" onPress={submitHandler} />
+        <Button title="Zatwierdź" color="purple" onPress={submitHandler} />
       </View>
     </View>
   );
@@ -197,13 +197,14 @@ const styles = StyleSheet.create({
   passwordContainer: {
     backgroundColor: "#7131B7",
     paddingBottom: 40,
+    paddingHorizontal: 30,
     paddingTop: 30,
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
   },
   tabContainer: {
-    backgroundColor: "#7B41BB",
+    backgroundColor: "#E8D7FC",
     borderRadius: 20,
     width: "100%",
     paddingHorizontal: 15,
@@ -211,6 +212,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 20,
+    elevation: 10,
   },
   headerIconBox: {
     width: 80,
@@ -218,11 +220,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 40,
-    backgroundColor: "#44B6C6",
+    backgroundColor: "#7131B7",
     marginBottom: 30,
+    elevation: 10,
   },
   label: {
-    color: "#CAAFE8",
+    color: "#7131B7",
     fontSize: 16,
     width: "100%",
     textAlign: "left",
@@ -238,7 +241,7 @@ const styles = StyleSheet.create({
   },
   labelWarning: {
     width: "100%",
-    color: "#de350b",
+    color: "red",
     textAlign: "left",
   },
   inputWarning: {

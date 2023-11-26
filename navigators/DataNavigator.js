@@ -2,6 +2,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import ContinentsNavigator from "./ContinentsNavigator";
 import HeaderIcon from "../ui/HeaderIcon";
 import { Ionicons } from "@expo/vector-icons";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 const DataNavigator = () => {
   const Drawer = createDrawerNavigator();
   return (
@@ -17,6 +18,7 @@ const DataNavigator = () => {
         drawerStyle: {
           backgroundColor: "#7B41BB",
         },
+
         headerRight: () => {
           return <HeaderIcon />;
         },
@@ -25,12 +27,16 @@ const DataNavigator = () => {
       <Drawer.Screen
         name="ContinentsDrawer"
         component={ContinentsNavigator}
-        options={{
-          headerTitle: "",
-          drawerLabel: "Kontynenty",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="compass" size={size} color={color} />
-          ),
+        options={({ route }) => {
+          const routeName = getFocusedRouteNameFromRoute(route);
+          return {
+            headerTitle: "Kontynenty",
+            headerShown: routeName === "Continents" ? true : false,
+            drawerLabel: "Kontynenty",
+            drawerIcon: ({ color, size }) => (
+              <Ionicons name="compass" size={size} color={color} />
+            ),
+          };
         }}
       />
     </Drawer.Navigator>

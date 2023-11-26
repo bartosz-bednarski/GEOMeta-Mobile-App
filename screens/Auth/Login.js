@@ -5,6 +5,7 @@ import Button from "../../ui/Button";
 import LoaderOverlay from "../../ui/LoaderOverlay";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/authStatus-reducer";
+import GeoMetaIconL from "../../ui/svg/GeoMetaIconL";
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
@@ -95,6 +96,7 @@ const LoginScreen = ({ navigation }) => {
   }
   return (
     <View style={styles.loginContainer}>
+      <GeoMetaIconL />
       <Text
         style={
           usernameWarning.status
@@ -139,6 +141,7 @@ const LoginScreen = ({ navigation }) => {
         autoCorrect={false}
         keyboardType="default"
         textContentType="password"
+        placeholderTextColor="white"
         secureTextEntry={true}
         value={password}
         onChangeText={(text) => {
@@ -149,7 +152,7 @@ const LoginScreen = ({ navigation }) => {
       {passwordWarning.status && (
         <Text style={styles.warningMessage}>{passwordWarning.message}</Text>
       )}
-      <Button title="Zaloguj się" onPress={submitHandler} />
+      <Button title="Zaloguj się" onPress={submitHandler} color="purple" />
     </View>
   );
 };

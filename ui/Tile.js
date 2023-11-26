@@ -25,12 +25,13 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   tileBox: {
-    backgroundColor: "#9264C6",
+    backgroundColor: "#7B41BB",
     width: 150,
     height: 150,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 15,
+    elevation: 10,
   },
   image: {
     width: 140,
