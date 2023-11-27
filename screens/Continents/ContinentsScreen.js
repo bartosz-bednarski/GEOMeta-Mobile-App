@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet } from "react-native";
 import Tile from "../../ui/Tile";
 import Europe from "../../ui/svg/continents/Europe";
-import Africa from "../../ui/svg/continents/Europe";
+import Africa from "../../ui/svg/continents/Africa";
 import Asia from "../../ui/svg/continents/Asia";
 import Oceania from "../../ui/svg/continents/Oceania";
 import NorthAmerica from "../../ui/svg/continents/NorthAmerica";
