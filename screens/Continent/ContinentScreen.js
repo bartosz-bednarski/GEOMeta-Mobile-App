@@ -133,12 +133,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
   },
-  continentHeader: {
-    fontSize: 16,
-    textShadowColor: "red",
-    textShadowOffset: { width: 5, height: 5 },
-    textShadowRadius: 2,
-  },
   countriesBox: {
     flexDirection: "column",
     width: "100%",
