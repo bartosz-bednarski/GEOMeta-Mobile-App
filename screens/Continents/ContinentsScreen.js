@@ -1,5 +1,11 @@
 import { Text, View, StyleSheet } from "react-native";
 import Tile from "../../ui/Tile";
+import Europe from "../../ui/svg/continents/Europe";
+import Africa from "../../ui/svg/continents/Europe";
+import Asia from "../../ui/svg/continents/Asia";
+import Oceania from "../../ui/svg/continents/Oceania";
+import NorthAmerica from "../../ui/svg/continents/NorthAmerica";
+import SouthAmerica from "../../ui/svg/continents/SouthAmerica";
 
 const ContinentsScreen = ({ navigation }) => {
   const onPressHandler = () => {
@@ -17,6 +23,8 @@ const ContinentsScreen = ({ navigation }) => {
             navigation.navigate("Continent", {
               continentId: "europe",
               header: "Europa",
+              image: require("../../assets/continents/europe.webp"),
+              headerImage: <Europe />,
             })
           }
         />
@@ -29,6 +37,8 @@ const ContinentsScreen = ({ navigation }) => {
             navigation.navigate("Continent", {
               continentId: "africa",
               header: "Afryka",
+              image: require("../../assets/continents/africa.webp"),
+              headerImage: <Africa />,
             })
           }
         />
@@ -43,6 +53,8 @@ const ContinentsScreen = ({ navigation }) => {
             navigation.navigate("Continent", {
               continentId: "northAmerica",
               header: "Ameryka Północna",
+              image: require("../../assets/continents/northAmerica.webp"),
+              headerImage: <NorthAmerica />,
             })
           }
         />
@@ -55,6 +67,8 @@ const ContinentsScreen = ({ navigation }) => {
             navigation.navigate("Continent", {
               continentId: "southAmerica",
               header: "Ameryka Południowa",
+              image: require("../../assets/continents/southAmerica.webp"),
+              headerImage: <SouthAmerica />,
             })
           }
         />
@@ -69,6 +83,8 @@ const ContinentsScreen = ({ navigation }) => {
             navigation.navigate("Continent", {
               continentId: "asia",
               header: "Azja",
+              image: require("../../assets/continents/asia.webp"),
+              headerImage: <Asia />,
             })
           }
         />
@@ -81,6 +97,8 @@ const ContinentsScreen = ({ navigation }) => {
             navigation.navigate("Continent", {
               continentId: "oceania",
               header: "Oceania",
+              image: require("../../assets/continents/oceania.webp"),
+              headerImage: <Oceania />,
             })
           }
         />
