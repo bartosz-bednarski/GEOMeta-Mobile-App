@@ -78,7 +78,8 @@ const CountryScreen = ({ navigation, route }) => {
         <View style={styles.tileLong}>
           <Text style={styles.tileLongText}>{countrytData.website}</Text>
         </View>
-        {/* <Image source={emblems[countrytData.emblem]} /> */}
+        <Text style={styles.label}>Rejestracja</Text>
+        <Image source={plates[countrytData.plate]} style={styles.plateImg} />
 
         {/* <Image source={plates[countrytData.plate]} /> */}
       </View>
@@ -106,6 +107,11 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 200,
     borderRadius: 15,
+  },
+  plateImg: {
+    width: "auto",
+    height: 100,
+    resizeMode: "contain",
   },
   rowContainer: {
     flexDirection: "row",
