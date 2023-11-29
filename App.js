@@ -13,6 +13,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import UsernameIcon from "./ui/UsernameIcon";
 import ProfileNavigator from "./navigators/ProfileNavigator";
 import DataNavigator from "./navigators/DataNavigator";
+import QuizNavigator from "./navigators/QuizNavigator";
 export default function App() {
   const navTheme = DefaultTheme;
   navTheme.colors.background = "#7131B7";
@@ -83,6 +84,22 @@ export default function App() {
                 options={{
                   tabBarIcon: ({ color, size }) => {
                     return <Ionicons name="bulb" size={size} color={color} />;
+                  },
+                  headerShown: false,
+                }}
+              />
+              <BottomTabs.Screen
+                name="Quiz"
+                component={QuizNavigator}
+                options={{
+                  tabBarIcon: ({ color, size }) => {
+                    return (
+                      <Ionicons
+                        name="timer-outline"
+                        size={size}
+                        color={color}
+                      />
+                    );
                   },
                   headerShown: false,
                 }}
