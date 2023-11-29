@@ -21,5 +21,10 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 12,
   },
+  image: {
+    width: 60,
+    height: 60,
+    resizeMode: "contain",
+  },
 });
 export default CountryIconBox;

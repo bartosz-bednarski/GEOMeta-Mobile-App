@@ -18,7 +18,6 @@ const DataNavigator = () => {
         drawerStyle: {
           backgroundColor: "#7B41BB",
         },
-
         headerRight: () => {
           return <HeaderIcon />;
         },
@@ -31,7 +30,10 @@ const DataNavigator = () => {
           const routeName = getFocusedRouteNameFromRoute(route);
           return {
             headerTitle: "Kontynenty",
-            headerShown: routeName === "Continents" ? true : false,
+            headerShown:
+              routeName === "Continent" || routeName === "Country"
+                ? false
+                : true,
             drawerLabel: "Kontynenty",
             drawerIcon: ({ color, size }) => (
               <Ionicons name="compass" size={size} color={color} />
