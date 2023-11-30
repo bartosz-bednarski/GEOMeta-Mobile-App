@@ -1,58 +1,71 @@
 import { Text, View, StyleSheet, Image, Pressable } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "../../ui/Button";
-import { useLayoutEffect } from "react";
-const QuizQuestion = () => {
-  const questionCountry = useSelector(
-    (state) => state.quiz.actualQuestion.question
-  );
-  const answers = useSelector((state) => state.quiz.actualQuestion.answers);
-  function importAll(r) {
-    let images = {};
-    r.keys().map((item, index) => {
-      images[item.replace("./", "")] = r(item);
-    });
+import { useLayoutEffect, useState, useRef, useEffect } from "react";
+import { setAnswer } from "../../redux/quiz-reducer";
+import Answer from "./Answer";
+const QuizQuestion = ({ actualQuestion, nextQuestion }) => {
+  const dispatch = useDispatch();
+  const [timeLeft, setTimeLeft] = useState(3);
+  let intervalID = useRef(null);
+  let timeout = useRef(null);
+  const userChooseAnswerHandler = (userAnswer) => {
+    clearInterval(intervalID.current),
+      clearTimeout(timeout.current),
+      dispatch(
+        setAnswer({
+          id: actualQuestion.id,
+          user_answer: userAnswer,
+          correct_answer: actualQuestion.correctAnswer,
+        })
+      );
+    nextQuestion(actualQuestion.id + 1);
+  };
+  useEffect(() => {
+    if (actualQuestion.id < 5) {
+      intervalID.current = setInterval(() => {
+        setTimeLeft((prev) => prev - 1);
+      }, 1010);
 
-    return images;
-  }
-  let emblems;
-  emblems = importAll(
-    require.context(
-      "../../assets/country/emblems",
-      false,
-      /\.(webp|jpe?g|png)$/
-    )
-  );
-  let flags;
-  flags = importAll(
-    require.context("../../assets/country/flags", false, /\.(webp|jpe?g|png)$/)
-  );
-  let plates;
-  plates = importAll(
-    require.context("../../assets/country/plates", false, /\.(webp|jpe?g|png)$/)
-  );
-  useLayoutEffect(() => {}, [answers]);
-  if (answers.length > 0) {
-    return (
-      <View style={styles.questionContainer}>
-        <Text style={styles.questionText}>Wybierz flagę {questionCountry}</Text>
-        {answers.map((answer, index) => {
+      timeout.current = setTimeout(() => {
+        setTimeLeft(3);
+
+        return (
+          clearInterval(intervalID.current),
+          clearTimeout(timeout.current),
+          dispatch(
+            setAnswer({
+              id: actualQuestion.id,
+              user_answer: "",
+              correct_answer: actualQuestion.correctAnswer,
+            })
+          ),
+          nextQuestion(actualQuestion.id + 1)
+        );
+      }, 3000);
+    }
+  }, [actualQuestion]);
+
+  console.log(timeLeft);
+  return (
+    <View style={styles.questionContainer}>
+      <Text style={styles.questionText}>
+        Wybierz flagę {actualQuestion.question}
+      </Text>
+      <View style={styles.questionsBox}>
+        {actualQuestion.answers.map((answer, index) => {
           return (
-            <Pressable
-              style={{ width: 150, height: 100, backgroundColor: "red" }}
-              id={index}
-              onPress={() => console.log("123")}
-            >
-              <Image
-                style={{ width: 150, height: 100 }}
-                source={flags[answer.country_flag]}
-              />
-            </Pressable>
+            <Answer
+              answer={answer.country_flag}
+              key={index}
+              id={actualQuestion.id}
+              onPress={() => userChooseAnswerHandler(actualQuestion.id)}
+            />
           );
         })}
       </View>
-    );
-  }
+    </View>
+  );
 };
 const styles = StyleSheet.create({
   questionContainer: {
@@ -71,16 +84,13 @@ const styles = StyleSheet.create({
     width: "70%",
     textAlign: "center",
   },
-  tileContainer: {
-    backgroundColor: "#9264C6",
-    width: 150,
-    height: 150,
-  },
-  rowContainer: {
+  questionsBox: {
+    marginVertical: 50,
     width: "100%",
+    height: "auto",
+    flexWrap: "wrap",
     flexDirection: "row",
-    alignContent: "center",
-    justifyContent: "center",
+    gap: 20,
   },
 });
 export default QuizQuestion;
