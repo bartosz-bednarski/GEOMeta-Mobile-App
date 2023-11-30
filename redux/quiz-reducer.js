@@ -8,6 +8,7 @@ const quizInitialState = {
     answers: [],
     correctAnswer: "",
   },
+  answers: [],
 };
 
 const quizSlice = createSlice({
@@ -23,8 +24,12 @@ const quizSlice = createSlice({
         correctAnswer: action.payload[0].answer,
       };
     },
+    setAnswer: (state, action) => {
+      state.answers = [...state.answers, action.payload];
+    },
   },
 });
 
 export const setQuestions = quizSlice.actions.setQuestions;
+export const setAnswer = quizSlice.actions.setAnswer;
 export default quizSlice.reducer;
