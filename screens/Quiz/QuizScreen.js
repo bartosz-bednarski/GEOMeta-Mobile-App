@@ -4,36 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setQuestions } from "../../redux/quiz-reducer";
 import QuizQuestion from "../../components/Quiz/QuizQuestion";
 import LoaderOverlay from "../../ui/LoaderOverlay";
+import QuizScore from "../../components/Quiz/QuizScore";
 const QuizScreen = ({ route }) => {
-  const answersUser = useSelector((state) => state.quiz.answers);
-  const [dataQuestions, setDataQuestions] = useState("");
-  const [actualQuestion, setActualQuestion] = useState({
-    id: "",
-    question: "",
-    answers: "",
-    correctAnswer: "",
-  });
-  const nextQuestion = (nextQuestionNumber) => {
-    // console.log(dataQuestions);
-    if (nextQuestionNumber === 5) {
-      setActualQuestion({
-        id: 5,
-        question: "",
-        answers: "",
-        correctAnswer: "",
-      });
-      console.log(answersUser);
-    }
-    if (nextQuestionNumber < 5) {
-      setActualQuestion({
-        id: dataQuestions[nextQuestionNumber].id,
-        question: dataQuestions[nextQuestionNumber].question,
-        answers: dataQuestions[nextQuestionNumber].data,
-        correctAnswer: dataQuestions[nextQuestionNumber].answer,
-      });
-    }
-  };
-  const [isFetching, setIsFetching] = useState(false);
   const quizTypeLoader = async (route) => {
     setIsFetching(true);
     const url = `https://geo-meta-rest-api.vercel.app/api/quiz/get${route}`;
@@ -57,8 +29,37 @@ const QuizScreen = ({ route }) => {
     });
     setIsFetching(false);
   };
+  const [dataQuestions, setDataQuestions] = useState("");
+  const [actualQuestion, setActualQuestion] = useState({
+    id: "",
+    question: "",
+    answers: "",
+    correctAnswer: "",
+  });
+  const nextQuestion = (nextQuestionNumber) => {
+    // console.log(dataQuestions);
+    if (nextQuestionNumber === 5) {
+      setActualQuestion({
+        id: 5,
+        question: "",
+        answers: "",
+        correctAnswer: "",
+      });
+    }
+    if (nextQuestionNumber < 5) {
+      setActualQuestion({
+        id: dataQuestions[nextQuestionNumber].id,
+        question: dataQuestions[nextQuestionNumber].question,
+        answers: dataQuestions[nextQuestionNumber].data,
+        correctAnswer: dataQuestions[nextQuestionNumber].answer,
+      });
+    }
+  };
+  const [isFetching, setIsFetching] = useState(false);
+
   useLayoutEffect(() => {
     const quizType = route.params.quizType;
+
     quizTypeLoader(quizType);
   }, []);
   if (isFetching) {
@@ -68,6 +69,13 @@ const QuizScreen = ({ route }) => {
       <QuizQuestion
         actualQuestion={actualQuestion}
         nextQuestion={nextQuestion}
+      />
+    );
+  } else if (actualQuestion.id === 5) {
+    return (
+      <QuizScore
+        quizType={route.params.quizType}
+        questions={dataQuestions.map((question) => question.question)}
       />
     );
   }

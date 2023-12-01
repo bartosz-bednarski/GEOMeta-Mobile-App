@@ -14,8 +14,8 @@ const QuizQuestion = ({ actualQuestion, nextQuestion }) => {
       clearTimeout(timeout.current),
       dispatch(
         setAnswer({
-          id: actualQuestion.id,
-          user_answer: userAnswer,
+          id: String(actualQuestion.id),
+          user_answer: String(userAnswer),
           correct_answer: actualQuestion.correctAnswer,
         })
       );
@@ -59,7 +59,7 @@ const QuizQuestion = ({ actualQuestion, nextQuestion }) => {
               answer={answer.country_flag}
               key={index}
               id={actualQuestion.id}
-              onPress={() => userChooseAnswerHandler(actualQuestion.id)}
+              onPress={() => userChooseAnswerHandler(index)}
             />
           );
         })}
