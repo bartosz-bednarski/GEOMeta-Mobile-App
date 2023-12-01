@@ -1,6 +1,6 @@
 import { Pressable, Text, StyleSheet, View } from "react-native";
 
-const Button = ({ onPress, title, color }) => {
+const Button = ({ onPress, title, color, styling }) => {
   return (
     <View>
       {color === "aqua" && (
@@ -28,8 +28,9 @@ const Button = ({ onPress, title, color }) => {
                   styles.buttonContainer,
                   styles.purpleBackground,
                   styles.buttonPressed,
+                  styling,
                 ]
-              : [styles.buttonContainer, styles.purpleBackground]
+              : [styles.buttonContainer, styles.purpleBackground, styling]
           }
         >
           <Text style={styles.text}>{title}</Text>
@@ -67,6 +68,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "white",
     fontWeight: "600",
+    textAlign: "center",
   },
 });
 export default Button;
