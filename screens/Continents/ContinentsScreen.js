@@ -8,9 +8,6 @@ import NorthAmerica from "../../ui/svg/continents/NorthAmerica";
 import SouthAmerica from "../../ui/svg/continents/SouthAmerica";
 
 const ContinentsScreen = ({ navigation }) => {
-  const onPressHandler = () => {
-    navigation.navigate("Continent");
-  };
   return (
     <View style={styles.continentsContainer}>
       <View style={styles.rowContainer}>
