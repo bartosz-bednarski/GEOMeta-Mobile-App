@@ -39,8 +39,26 @@ const achievementsSlice = createSlice({
         games: action.payload.plates_quiz_counter,
       };
     },
+    updateAchievements: (state) => {
+      state.flagsQuiz = {
+        name: "",
+        points: "",
+        games: "",
+      };
+      state.emblemsQuiz = {
+        name: "",
+        points: "",
+        games: "",
+      };
+      state.platesQuiz = {
+        name: "",
+        points: "",
+        games: "",
+      };
+    },
   },
 });
 
 export default achievementsSlice.reducer;
 export const setAchievements = achievementsSlice.actions.setAchievements;
+export const updateAchievements = achievementsSlice.actions.updateAchievements;

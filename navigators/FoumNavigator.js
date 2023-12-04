@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import QuizMenuScreen from "../screens/Quiz/QuizMenuScreen";
-import QuizScreen from "../screens/Quiz/QuizScreen";
+import ForumMenuScreen from "../screens/Forum/ForumMenuScreen";
 import HeaderIcon from "../ui/HeaderIcon";
-const QuizNavigator = () => {
+import AddNewTopicScreen from "../screens/Forum/AddNewTopicScreen";
+const ForumNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator
@@ -11,28 +11,27 @@ const QuizNavigator = () => {
           backgroundColor: "#7B41BB",
         },
         headerTintColor: "white",
-
         headerRight: () => {
           return <HeaderIcon navType="stack" />;
         },
       }}
     >
       <Stack.Screen
-        name="QuizMenu"
-        component={QuizMenuScreen}
+        component={ForumMenuScreen}
+        name="ForumMenu"
         options={{
-          headerTitle: "Quiz",
+          headerTitle: "Forum",
         }}
       />
       <Stack.Screen
-        name="QuizType"
-        component={QuizScreen}
+        component={AddNewTopicScreen}
+        name="AddNewTopic"
         options={{
-          headerShown: false,
-          headerTitle: "",
+          headerTitle: "Dodaj nowy temat",
         }}
       />
     </Stack.Navigator>
   );
 };
-export default QuizNavigator;
+
+export default ForumNavigator;

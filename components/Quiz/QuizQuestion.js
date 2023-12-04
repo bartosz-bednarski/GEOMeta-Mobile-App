@@ -1,12 +1,31 @@
 import { Text, View, StyleSheet, Image, Pressable } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import Button from "../../ui/Button";
-import { useLayoutEffect, useState, useRef, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useState, useRef, useEffect } from "react";
 import { setAnswer } from "../../redux/quiz-reducer";
-import Answer from "./Answer";
-const QuizQuestion = ({ actualQuestion, nextQuestion }) => {
+import Answer from "./ui/Answer";
+const QuizQuestion = ({ actualQuestion, nextQuestion, quizType }) => {
+  let quizTypeHeader;
+  let answerImage;
+  switch (quizType) {
+    case "Flags":
+      quizTypeHeader = " flagę ";
+      answerImage = "country_flag";
+      break;
+    case "Emblems":
+      quizTypeHeader = " herb ";
+      answerImage = "country_emblem";
+      break;
+    case "Plates":
+      quizTypeHeader = " rejestrację ";
+      answerImage = "country_plate";
+      break;
+    default:
+      quizTypeHeader = " flagę ";
+      answerImage = "country_flag";
+      break;
+  }
   const dispatch = useDispatch();
-  const [timeLeft, setTimeLeft] = useState(3);
+  const [timeLeft, setTimeLeft] = useState(10);
   let intervalID = useRef(null);
   let timeout = useRef(null);
   const userChooseAnswerHandler = (userAnswer) => {
@@ -20,6 +39,7 @@ const QuizQuestion = ({ actualQuestion, nextQuestion }) => {
         })
       );
     nextQuestion(actualQuestion.id + 1);
+    setTimeLeft(10);
   };
   useEffect(() => {
     if (actualQuestion.id < 5) {
@@ -28,7 +48,7 @@ const QuizQuestion = ({ actualQuestion, nextQuestion }) => {
       }, 1010);
 
       timeout.current = setTimeout(() => {
-        setTimeLeft(3);
+        setTimeLeft(10);
 
         return (
           clearInterval(intervalID.current),
@@ -42,28 +62,32 @@ const QuizQuestion = ({ actualQuestion, nextQuestion }) => {
           ),
           nextQuestion(actualQuestion.id + 1)
         );
-      }, 3000);
+      }, 10000);
     }
   }, [actualQuestion]);
-
-  console.log(timeLeft);
   return (
     <View style={styles.questionContainer}>
       <Text style={styles.questionText}>
-        Wybierz flagę {actualQuestion.question}
+        Wybierz{quizTypeHeader}
+        {actualQuestion.question}
       </Text>
       <View style={styles.questionsBox}>
         {actualQuestion.answers.map((answer, index) => {
           return (
             <Answer
-              answer={answer.country_flag}
+              answer={answer[answerImage]}
               key={index}
               id={actualQuestion.id}
+              quizType={quizType}
               onPress={() => userChooseAnswerHandler(index)}
             />
           );
         })}
       </View>
+      <View style={styles.timerBox}>
+        <View style={[styles.timerFill, { width: `${timeLeft * 10}%` }]}></View>
+      </View>
+      <Text style={styles.timerText}>{timeLeft}</Text>
     </View>
   );
 };
@@ -74,7 +98,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     paddingHorizontal: 30,
     flex: 1,
-    justifyContent: "flex-start",
+    justifyContent: "center",
     alignItems: "center",
   },
   questionText: {
@@ -91,6 +115,24 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     flexDirection: "row",
     gap: 20,
+  },
+  timerBox: {
+    height: 50,
+    width: "100%",
+    marginVertical: 20,
+    justifyContent: "flex-start",
+    borderRadius: 20,
+  },
+  timerFill: {
+    backgroundColor: "gold",
+    height: 20,
+    borderRadius: 20,
+  },
+  timerText: {
+    fontSize: 24,
+    color: "gold",
+    width: "100%",
+    textAlign: "center",
   },
 });
 export default QuizQuestion;

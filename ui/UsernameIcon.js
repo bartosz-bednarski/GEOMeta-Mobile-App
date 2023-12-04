@@ -22,6 +22,13 @@ const UsernameIcon = ({ size }) => {
       { backgroundColor: iconBackgroundColor },
     ];
     textStyle = [styles.text, styles.largeText];
+  } else if (size === "md") {
+    containerStyle = [
+      styles.container,
+      styles.mediumContainer,
+      { backgroundColor: iconBackgroundColor },
+    ];
+    textStyle = [styles.text, styles.mediumText];
   }
   return (
     <View style={containerStyle}>
@@ -47,9 +54,17 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
   },
+  mediumContainer: {
+    width: 50,
+    height: 50,
+  },
   largeText: {
     fontSize: 24,
     fontWeight: "600",
+  },
+  mediumText: {
+    fontSize: 20,
+    fontWeight: "500",
   },
 });
 export default UsernameIcon;

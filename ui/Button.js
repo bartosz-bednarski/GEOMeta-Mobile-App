@@ -1,10 +1,11 @@
 import { Pressable, Text, StyleSheet, View } from "react-native";
 
-const Button = ({ onPress, title, color, styling }) => {
+const Button = ({ onPress, title, color, styling, disabled }) => {
   return (
     <View>
       {color === "aqua" && (
         <Pressable
+          disabled={disabled}
           onPress={onPress}
           style={({ pressed }) =>
             pressed
@@ -13,6 +14,8 @@ const Button = ({ onPress, title, color, styling }) => {
                   styles.aquaBackground,
                   styles.buttonPressed,
                 ]
+              : disabled
+              ? [styles.buttonContainer, { backgroundColor: "grey" }]
               : [styles.buttonContainer, styles.aquaBackground]
           }
         >
@@ -21,6 +24,7 @@ const Button = ({ onPress, title, color, styling }) => {
       )}
       {color === "purple" && (
         <Pressable
+          disabled={disabled}
           onPress={onPress}
           style={({ pressed }) =>
             pressed
@@ -30,6 +34,8 @@ const Button = ({ onPress, title, color, styling }) => {
                   styles.buttonPressed,
                   styling,
                 ]
+              : disabled
+              ? [styles.buttonContainer, { backgroundColor: "grey" }]
               : [styles.buttonContainer, styles.purpleBackground, styling]
           }
         >

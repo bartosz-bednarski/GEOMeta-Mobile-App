@@ -2,11 +2,11 @@ import { Text, View, StyleSheet } from "react-native";
 import { useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetQuiz } from "../../redux/quiz-reducer";
-import ScoreQuestion from "./ScoreQuestion";
+import ScoreQuestion from "./ui/ScoreQuestion";
 import Button from "../../ui/Button";
 import LoaderOverlay from "../../ui/LoaderOverlay";
-
-const QuizScore = ({ quizType, questions }) => {
+import { updateAchievements } from "../../redux/achievements-reducer";
+const QuizScore = ({ quizType, questions, navigation }) => {
   const dispatch = useDispatch();
   const [isFetching, setIsFetching] = useState(false);
   const accessToken = useSelector((state) => state.authorization.accessToken);
@@ -14,7 +14,6 @@ const QuizScore = ({ quizType, questions }) => {
 
   const [response, setResponse] = useState("");
   const postAnswersHTTP = async (route, accessToken, answersUser) => {
-    console.log(answersUser);
     setIsFetching(true);
     const url = accessToken
       ? `https://geo-meta-rest-api.vercel.app/api/quiz/post${route}/auth`
@@ -31,11 +30,10 @@ const QuizScore = ({ quizType, questions }) => {
       body: JSON.stringify(answersUser),
     });
     const data = await response.json();
-    console.log(data);
+    dispatch(updateAchievements());
     setIsFetching(false);
     if ((data.message = "ok")) {
       setResponse(data.data);
-      console.log(questions);
       // dispatch(updateAchievements());
       //   setServerResponse(data.data);
     }
@@ -62,19 +60,27 @@ const QuizScore = ({ quizType, questions }) => {
           );
         })}
 
-      <Text style={styles.scoreText}>Zdobyte punkty: </Text>
+      <Text style={styles.scoreText}>Zdobyte punkty </Text>
       <Text style={styles.scoreText}>{response.user_score}</Text>
       <Button
         color="purple"
         title="Zagraj jeszcze raz"
         styling={{ width: 300, marginVertical: 5 }}
-        onPress={() => dispatch(resetQuiz())}
+        onPress={() => {
+          dispatch(resetQuiz());
+          navigation.navigate("QuizType", {
+            quizType: quizType,
+          });
+        }}
       />
       <Button
         color="purple"
         title="Inne quizy"
         styling={{ width: 300, marginVertical: 5 }}
-        onPress={() => dispatch(resetQuiz())}
+        onPress={() => {
+          dispatch(resetQuiz());
+          navigation.navigate("QuizMenu");
+        }}
       />
     </View>
   );
@@ -90,11 +96,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   scoreText: {
-    fontSize: 20,
+    fontSize: 28,
     width: "100%",
     textAlign: "center",
     marginVertical: 10,
-    color: "white",
+    color: "gold",
     fontWeight: "600",
   },
 });
