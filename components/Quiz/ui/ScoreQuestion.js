@@ -3,7 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 const ScoreQuestion = ({ questionNumber, answer, question }) => {
   return (
     <>
-      <Text style={styles.label}>Pytanie {questionNumber}</Text>
+      <Text style={styles.label}>Pytanie {questionNumber + 1}</Text>
       <View style={styles.questionBox}>
         {answer === "correct" ? (
           <Ionicons name="checkmark" size={30} color="#26B726" />

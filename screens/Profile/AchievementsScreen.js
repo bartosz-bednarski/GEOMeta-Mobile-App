@@ -32,7 +32,7 @@ const AchievementsScreen = () => {
       setIsFetching(false);
     };
     flags.points === "" && getProfileData();
-  }, []);
+  }, [flags]);
   if (isFetching) {
     return <LoaderOverlay />;
   }

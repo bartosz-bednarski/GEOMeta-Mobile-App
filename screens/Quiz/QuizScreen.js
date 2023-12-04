@@ -5,7 +5,7 @@ import { setQuestions } from "../../redux/quiz-reducer";
 import QuizQuestion from "../../components/Quiz/QuizQuestion";
 import LoaderOverlay from "../../ui/LoaderOverlay";
 import QuizScore from "../../components/Quiz/QuizScore";
-const QuizScreen = ({ route }) => {
+const QuizScreen = ({ route, navigation }) => {
   const quizTypeLoader = async (route) => {
     setIsFetching(true);
     const url = `https://geo-meta-rest-api.vercel.app/api/quiz/get${route}`;
@@ -15,7 +15,17 @@ const QuizScreen = ({ route }) => {
       return {
         ...question,
         data: question.data.map((img) => {
-          return { country_flag: img.country_flag.replace("svg", "webp") };
+          if (route === "Flags") {
+            return { country_flag: img.country_flag.replace("svg", "webp") };
+          } else if (route === "Emblems") {
+            return {
+              country_emblem: img.emblem.replace("svg", "webp"),
+            };
+          } else if (route === "Plates") {
+            return {
+              country_plate: img.plate.replace("svg", "webp"),
+            };
+          }
         }),
       };
     });
@@ -61,7 +71,7 @@ const QuizScreen = ({ route }) => {
     const quizType = route.params.quizType;
 
     quizTypeLoader(quizType);
-  }, []);
+  }, [route]);
   if (isFetching) {
     return <LoaderOverlay />;
   } else if (actualQuestion.id !== "" && actualQuestion.id < 5) {
@@ -69,6 +79,7 @@ const QuizScreen = ({ route }) => {
       <QuizQuestion
         actualQuestion={actualQuestion}
         nextQuestion={nextQuestion}
+        quizType={route.params.quizType}
       />
     );
   } else if (actualQuestion.id === 5) {
@@ -76,6 +87,7 @@ const QuizScreen = ({ route }) => {
       <QuizScore
         quizType={route.params.quizType}
         questions={dataQuestions.map((question) => question.question)}
+        navigation={navigation}
       />
     );
   }
