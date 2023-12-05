@@ -27,7 +27,6 @@ const ForumMenuScreen = ({ route, navigation }) => {
     const data = await response.json();
     setFetchedTopics(data.data);
     setIsFetching(false);
-    // console.log(data);
   };
   useEffect(() => {
     getTopics();
@@ -44,8 +43,9 @@ const ForumMenuScreen = ({ route, navigation }) => {
           fetchedTopics.map((topic) => {
             return (
               <TopicMenu
-                id={topic._id}
+                id={topic.topic_id}
                 key={topic._id}
+                topic={topic.topic}
                 comments={topic.comments
                   .slice(topic.comments.length - 3)
                   .reverse()}
@@ -55,6 +55,12 @@ const ForumMenuScreen = ({ route, navigation }) => {
                   " " +
                   topic.comments[topic.comments.length - 1].time
                 }
+                author={{
+                  username: topic.username,
+                  usernameShort: topic.usernameShort,
+                  iconBackgroundColor: topic.iconBackgroundColor,
+                }}
+                navigation={navigation}
               />
             );
           })}

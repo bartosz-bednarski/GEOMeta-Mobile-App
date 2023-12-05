@@ -54,6 +54,7 @@ export default function App() {
               screenOptions={({ navigation }) => ({
                 headerStyle: { backgroundColor: "#7B41BB" },
                 headerTintColor: "white",
+                // tabBarHideOnKeyboard: true,
                 tabBarStyle: {
                   backgroundColor: "#7B41BB",
                   borderBlockColor: "transparent",
