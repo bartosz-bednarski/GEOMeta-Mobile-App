@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 const TopicRecentAnswers = ({ comments, commentsSum }) => {
   return (
     <View style={styles.recentAnswersContainer}>
@@ -14,9 +15,11 @@ const TopicRecentAnswers = ({ comments, commentsSum }) => {
               ]}
               key={index}
             >
-              {comment.usernameShort === "anonymous"
-                ? "AA"
-                : comment.usernameShort}
+              {comment.usernameShort === "anonymous" ? (
+                <Ionicons name="eye-outline" size={15} color="white" />
+              ) : (
+                comment.usernameShort
+              )}
             </Text>
           );
         })}

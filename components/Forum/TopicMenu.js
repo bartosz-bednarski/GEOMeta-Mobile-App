@@ -1,17 +1,36 @@
 import { Pressable, Text, StyleSheet, View } from "react-native";
 import TopicRecentAnswers from "./TopicRecentAnswers";
-const TopicMenu = ({ id, comments, commentsSum, time }) => {
+const TopicMenu = ({
+  id,
+  comments,
+  commentsSum,
+  time,
+  navigation,
+  topic,
+  author,
+}) => {
+  const topicOnPressHandler = () => {
+    navigation.navigate("TopicComments", {
+      id: id,
+      topic: topic,
+      author: author,
+    });
+  };
   return (
-    <Pressable style={styles.topicMenuContainer}>
+    <Pressable style={styles.topicMenuContainer} onPress={topicOnPressHandler}>
       <View style={styles.headerContainer}>
-        <Text style={styles.userNameIcon}>BB</Text>
+        <Text
+          style={[
+            styles.userNameIcon,
+            { backgroundColor: author.iconBackgroundColor },
+          ]}
+        >
+          {author.usernameShort}
+        </Text>
 
-        <Text style={styles.headerText}>Bartosz</Text>
+        <Text style={styles.headerText}>{author.username}</Text>
       </View>
-      <Text style={styles.topicText}>
-        Które regiony geograficzne w GeoGuessr uważacie za najtrudniejsze, a
-        które za najłatwiejsze? Dlaczego?
-      </Text>
+      <Text style={styles.topicText}>{topic}</Text>
       <TopicRecentAnswers comments={comments} commentsSum={commentsSum} />
       <Text style={styles.time}>{time}</Text>
     </Pressable>
@@ -22,7 +41,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     paddingHorizontal: 10,
     paddingTop: 30,
-    paddingBottom: 50,
+    paddingBottom: 0,
   },
   headerContainer: {
     flexDirection: "row",
@@ -41,7 +60,6 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 15,
-    backgroundColor: "red",
     textAlign: "center",
     textAlignVertical: "center",
     color: "white",

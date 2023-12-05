@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ForumMenuScreen from "../screens/Forum/ForumMenuScreen";
 import HeaderIcon from "../ui/HeaderIcon";
 import AddNewTopicScreen from "../screens/Forum/AddNewTopicScreen";
+import TopicComments from "../screens/Forum/TopicComments";
 const ForumNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
@@ -28,6 +29,13 @@ const ForumNavigator = () => {
         name="AddNewTopic"
         options={{
           headerTitle: "Dodaj nowy temat",
+        }}
+      />
+      <Stack.Screen
+        component={TopicComments}
+        name="TopicComments"
+        options={{
+          headerTitle: "",
         }}
       />
     </Stack.Navigator>
