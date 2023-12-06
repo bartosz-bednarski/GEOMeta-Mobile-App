@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet } from "react-native";
-import Tile from "../../ui/Tile";
+import { default as ContinentIcon } from "../../ui/Tile";
 import Europe from "../../ui/svg/continents/Europe";
 import Africa from "../../ui/svg/continents/Africa";
 import Asia from "../../ui/svg/continents/Asia";
@@ -11,7 +11,7 @@ const ContinentsScreen = ({ navigation }) => {
   return (
     <View style={styles.continentsContainer}>
       <View style={styles.rowContainer}>
-        <Tile
+        <ContinentIcon
           content="image"
           image={require("../../assets/continents/europe.webp")}
           header="Europa"
@@ -25,7 +25,7 @@ const ContinentsScreen = ({ navigation }) => {
             })
           }
         />
-        <Tile
+        <ContinentIcon
           content="image"
           image={require("../../assets/continents/africa.webp")}
           header="Afryka"
@@ -41,7 +41,7 @@ const ContinentsScreen = ({ navigation }) => {
         />
       </View>
       <View style={styles.rowContainer}>
-        <Tile
+        <ContinentIcon
           content="image"
           image={require("../../assets/continents/northAmerica.webp")}
           header="Ameryka Północna"
@@ -55,7 +55,7 @@ const ContinentsScreen = ({ navigation }) => {
             })
           }
         />
-        <Tile
+        <ContinentIcon
           content="image"
           image={require("../../assets/continents/southAmerica.webp")}
           header="Ameryka Południowa"
@@ -71,7 +71,7 @@ const ContinentsScreen = ({ navigation }) => {
         />
       </View>
       <View style={styles.rowContainer}>
-        <Tile
+        <ContinentIcon
           content="image"
           image={require("../../assets/continents/asia.webp")}
           header="Azja"
@@ -85,7 +85,7 @@ const ContinentsScreen = ({ navigation }) => {
             })
           }
         />
-        <Tile
+        <ContinentIcon
           content="image"
           image={require("../../assets/continents/oceania.webp")}
           header="Oceania"

@@ -19,7 +19,7 @@ const Month = [
   "Gru",
 ];
 
-const AddNewTopicScreen = ({ route, navigation }) => {
+const NewTopicScreen = ({ route, navigation }) => {
   let date = new Date();
   let day = new String(date.getDate());
   day = day.length === 1 ? `0${day}` : day;
@@ -145,4 +145,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-export default AddNewTopicScreen;
+export default NewTopicScreen;

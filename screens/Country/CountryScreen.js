@@ -1,54 +1,29 @@
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import { useState, useLayoutEffect } from "react";
-import TileBox from "../../components/Country/TileBox";
+import IconBox from "../../components/Country/IconBox";
 import LoaderOverlay from "../../ui/LoaderOverlay";
+import {
+  fetchCountryData,
+  importEmblemsIcons,
+  importFlagsIcons,
+  importPlatesIcons,
+} from "../../components/Country/countryHelper";
 const CountryScreen = ({ navigation, route }) => {
   const countryName = route.params.header;
-  function importAll(r) {
-    let images = {};
-    r.keys().map((item, index) => {
-      images[item.replace("./", "")] = r(item);
-    });
-
-    return images;
-  }
-  let emblems;
-  emblems = importAll(
-    require.context(
-      "../../assets/country/emblems",
-      false,
-      /\.(webp|jpe?g|png)$/
-    )
-  );
-  let flags;
-  flags = importAll(
-    require.context("../../assets/country/flags", false, /\.(webp|jpe?g|png)$/)
-  );
-  let plates;
-  plates = importAll(
-    require.context("../../assets/country/plates", false, /\.(webp|jpe?g|png)$/)
-  );
+  const emblems = importEmblemsIcons();
+  const flags = importFlagsIcons();
+  const plates = importPlatesIcons();
   const [countrytData, setCountryData] = useState("");
-  const [isFetching, setIsFetching] = useState(true);
-  const fetchContinentData = async () => {
-    const response = await fetch(
-      `https://geo-meta-rest-api.vercel.app/api/countries/${countryName}`,
-      { mode: "cors" }
-    );
-    const data = await response.json();
-    const dataMod = {
-      ...data.data[0],
-      country_flag: data.data[0].country_flag.replace("svg", "webp"),
-      emblem: data.data[0].emblem.replace("svg", "webp"),
-      plate: data.data[0].plate.replace("svg", "webp"),
-    };
-    setCountryData(dataMod);
+  const [isFetching, setIsFetching] = useState(false);
+
+  const getCountyDataHandler = async (countryName) => {
+    setIsFetching(true);
+    setCountryData(await fetchCountryData(countryName));
     setIsFetching(false);
-    console.log("data", dataMod);
   };
 
   useLayoutEffect(() => {
-    fetchContinentData();
+    getCountyDataHandler(countryName);
   }, []);
   if (isFetching) {
     return <LoaderOverlay />;
@@ -62,9 +37,9 @@ const CountryScreen = ({ navigation, route }) => {
           style={styles.flagueImg}
         />
         <View style={styles.rowContainer}>
-          <TileBox type="emblem" emblem={emblems[countrytData.emblem]} />
-          <TileBox type="temperature" temperature={countrytData.temperature} />
-          <TileBox type="movement" movement={countrytData.movement} />
+          <IconBox type="emblem" emblem={emblems[countrytData.emblem]} />
+          <IconBox type="temperature" temperature={countrytData.temperature} />
+          <IconBox type="movement" movement={countrytData.movement} />
         </View>
         <Text style={styles.label}>Stolica</Text>
         <View style={styles.tileLong}>
@@ -80,8 +55,6 @@ const CountryScreen = ({ navigation, route }) => {
         </View>
         <Text style={styles.label}>Rejestracja</Text>
         <Image source={plates[countrytData.plate]} style={styles.plateImg} />
-
-        {/* <Image source={plates[countrytData.plate]} /> */}
       </View>
     </ScrollView>
   );

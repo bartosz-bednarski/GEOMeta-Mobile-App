@@ -4,7 +4,7 @@ import mediumTemperature from "../../assets/country/medium-temperature.png";
 import highTemperature from "../../assets/country/fever.webp";
 import rightHand from "../../assets/country/hand-right-outline.webp";
 import leftHand from "../../assets/country/hand-left-outline.webp";
-const TileBox = ({ temperature, movement, emblem, type }) => {
+const IconBox = ({ temperature, movement, emblem, type }) => {
   let temperatureImg;
   let movementImg;
   switch (temperature) {
@@ -31,7 +31,6 @@ const TileBox = ({ temperature, movement, emblem, type }) => {
     default:
       movementImg = rightHand;
   }
-  console.log(temperature);
   return (
     <View style={styles.tileBox}>
       {type === "emblem" && (
@@ -78,4 +77,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
-export default TileBox;
+export default IconBox;

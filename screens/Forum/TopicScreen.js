@@ -1,14 +1,19 @@
-import { useEffect, useState, useLayoutEffect } from "react";
+import { useEffect, useState, useLayoutEffect, useRef } from "react";
 import { View, Text, ScrollView, StyleSheet, Keyboard } from "react-native";
 import TopicHeader from "../../components/Forum/TopicHeader";
 import Comment from "../../components/Forum/Comment";
 import LoaderOverlay from "../../ui/LoaderOverlay";
 import TypeComment from "../../components/Forum/TypeComment";
-const TopicComments = ({ navigation, route }) => {
+import { useDispatch } from "react-redux";
+import { updateData } from "../../redux/forum-reducer";
+const TopicScreen = ({ navigation, route }) => {
+  const dispatch = useDispatch();
+  const scrollView = useRef(null);
   const topic = route.params.topic;
   const topicAuthor = route.params.author;
   const topicId = route.params.id;
   const getComments = async (topicId) => {
+    firstLoad ? setShowLoader(true) : setShowLoader(false);
     setIsFetching(true);
     const response = await fetch(
       `https://geo-meta-rest-api.vercel.app/api/forum/${topicId}/getComments`,
@@ -17,13 +22,20 @@ const TopicComments = ({ navigation, route }) => {
     const data = await response.json();
     setCommentsFetched(data.data);
     setIsFetching(false);
+    setFirstLoad(false);
+    setCommentSent(false);
+    setShowLoader(false);
+    dispatch(updateData());
   };
   const [commentsFetched, setCommentsFetched] = useState("");
   const [isFetching, setIsFetching] = useState(false);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const [commentSent, setCommentSent] = useState(false);
+  const [firstLoad, setFirstLoad] = useState(true);
+  const [showLoader, setShowLoader] = useState(false);
   useEffect(() => {
     getComments(topicId);
-  }, []);
+  }, [commentSent]);
   useLayoutEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -43,12 +55,16 @@ const TopicComments = ({ navigation, route }) => {
       keyboardDidShowListener.remove();
     };
   }, []);
-  if (isFetching) {
+  if (showLoader) {
     return <LoaderOverlay />;
   }
   return (
     <View style={styles.commentsContainer}>
       <ScrollView
+        ref={scrollView}
+        onContentSizeChange={() =>
+          scrollView.current.scrollToEnd({ animated: true })
+        }
         style={[
           styles.scrollView,
           { height: isKeyboardVisible ? "82%" : "88.5%" },
@@ -72,7 +88,14 @@ const TopicComments = ({ navigation, route }) => {
             ))}
         </View>
       </ScrollView>
-      <TypeComment topicId={topicId} />
+      <TypeComment
+        topicId={topicId}
+        onCommentSent={() => {
+          setCommentSent(true);
+          setIsFetching(true);
+        }}
+        isFetching={isFetching}
+      />
     </View>
   );
 };
@@ -89,4 +112,4 @@ const styles = StyleSheet.create({
     marginBottom: "1%",
   },
 });
-export default TopicComments;
+export default TopicScreen;

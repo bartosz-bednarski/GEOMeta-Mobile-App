@@ -13,6 +13,7 @@ import {
 } from "redux-persist";
 import achievementsReducer from "./achievements-reducer";
 import quizReducer from "./quiz-reducer";
+import forumReducer from "./forum-reducer";
 
 const persistConfig = {
   key: "root",
@@ -27,6 +28,7 @@ export const store = configureStore({
     authorization: persistedAuthorizationReducer,
     achievements: achievementsReducer,
     quiz: quizReducer,
+    forum: forumReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

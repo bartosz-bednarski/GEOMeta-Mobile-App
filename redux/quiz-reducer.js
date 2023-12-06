@@ -28,14 +28,14 @@ const quizSlice = createSlice({
       state.answers = [...state.answers, action.payload];
     },
     resetQuiz: (state) => {
-      (state.questions = []),
-        (state.actualQuestion = {
-          id: 0,
-          question: "",
-          answers: [],
-          correctAnswer: "",
-        }),
-        (state.answers = []);
+      state.questions = [];
+      state.actualQuestion = {
+        id: 0,
+        question: "",
+        answers: [],
+        correctAnswer: "",
+      };
+      state.answers = [];
     },
   },
 });
