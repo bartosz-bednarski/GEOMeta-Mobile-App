@@ -1,9 +1,9 @@
 import { useEffect, useState, useLayoutEffect, useRef } from "react";
-import { View, Text, ScrollView, StyleSheet, Keyboard } from "react-native";
-import TopicHeader from "../../components/Forum/TopicHeader";
-import Comment from "../../components/Forum/Comment";
+import { View, ScrollView, StyleSheet, Keyboard } from "react-native";
+import TopicHeader from "../../components/Forum/Topic/TopicHeader";
+import Comment from "../../components/Forum/Topic/Comment";
 import LoaderOverlay from "../../ui/LoaderOverlay";
-import TypeComment from "../../components/Forum/TypeComment";
+import AddComment from "../../components/Forum/Topic/AddComment";
 import { useDispatch } from "react-redux";
 import { updateData } from "../../redux/forum-reducer";
 const TopicScreen = ({ navigation, route }) => {
@@ -88,7 +88,7 @@ const TopicScreen = ({ navigation, route }) => {
             ))}
         </View>
       </ScrollView>
-      <TypeComment
+      <AddComment
         topicId={topicId}
         onCommentSent={() => {
           setCommentSent(true);

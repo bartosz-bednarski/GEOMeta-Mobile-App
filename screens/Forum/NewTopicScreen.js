@@ -1,9 +1,12 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import UsernameIcon from "../../ui/UsernameIcon";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Button from "../../ui/Button";
 import { useEffect, useState } from "react";
 import LoaderOverlay from "../../ui/LoaderOverlay";
+import { createTopic } from "../../components/Forum/forumHelper";
+import { updateData } from "../../redux/forum-reducer";
+
 const Month = [
   "Sty",
   "Lut",
@@ -20,31 +23,20 @@ const Month = [
 ];
 
 const NewTopicScreen = ({ route, navigation }) => {
+  const dispatch = useDispatch();
   let date = new Date();
   let day = new String(date.getDate());
   day = day.length === 1 ? `0${day}` : day;
   const submitHandler = async () => {
     if (textInput.length > 6 && accessToken) {
+      dispatch(updateData());
       setIsFetching(true);
-      const response = await fetch(
-        "https://geo-meta-rest-api.vercel.app/api/forum/createTopic",
-        // "http://localhost:9001/api/forum/createTopic",
-        {
-          method: "POST",
-          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-          credentials: "same-origin", // include, *same-origin, omit
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${accessToken}`,
-          },
-          body: JSON.stringify({
-            usernameShort: usernameShort,
-            topic: textInput,
-            iconBackgroundColor: iconBackgroundColor,
-          }),
-        }
+      await createTopic(
+        accessToken,
+        usernameShort,
+        textInput,
+        iconBackgroundColor
       );
-      const data = await response.json();
       setIsFetching(false);
       setTextInput("");
       navigation.navigate("ForumMenu");

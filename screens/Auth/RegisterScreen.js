@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Button from "../../ui/Button";
 import LoaderOverlay from "../../ui/LoaderOverlay";
 import GeoMetaIconL from "../../ui/svg/GeoMetaIconL";
+import { registerUser } from "../../components/Auth/authHelper";
 const RegisterScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -46,28 +47,7 @@ const RegisterScreen = ({ navigation }) => {
     }
     if (username.length > 0 && password.length >= 6 && email.length > 0) {
       setIsFetching(true);
-      const randomColor = `#${Math.floor(Math.random() * 16777215).toString(
-        16
-      )}`;
-
-      const response = await fetch(
-        "https://geo-meta-rest-api.vercel.app/api/users/register",
-        {
-          method: "POST",
-          cache: "no-cache",
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: username,
-            email: email,
-            password: password,
-            iconBackgroundColor: randomColor,
-          }),
-        }
-      );
-      const data = await response.json();
+      const data = await registerUser(username, email, password);
       setIsFetching(false);
       if (data.message === "Login,password or email too short") {
         setUsernameWarning({

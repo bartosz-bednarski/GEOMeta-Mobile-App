@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-const TopicRecentAnswers = ({ comments, commentsSum }) => {
+const RecentAnswers = ({ comments, commentsSum }) => {
   return (
     <View style={styles.recentAnswersContainer}>
       <View style={styles.recentAnswersBox}>
@@ -24,7 +24,9 @@ const TopicRecentAnswers = ({ comments, commentsSum }) => {
           );
         })}
       </View>
-      <Text style={styles.plusText}>+{commentsSum - 3}</Text>
+      {commentsSum > 0 && (
+        <Text style={styles.plusText}>+{commentsSum - 3}</Text>
+      )}
     </View>
   );
 };
@@ -76,4 +78,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-export default TopicRecentAnswers;
+export default RecentAnswers;

@@ -6,7 +6,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSelector, useDispatch } from "react-redux";
 import { updateAccessToken } from "../../redux/authStatus-reducer";
 import LoaderOverlay from "../../ui/LoaderOverlay";
+import { changePassword } from "../../components/Profile/profileHelper";
 const PasswordScreen = () => {
+  const accessToken = useSelector((state) => state.authorization.accessToken);
+  const dispatch = useDispatch();
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
@@ -27,8 +30,7 @@ const PasswordScreen = () => {
     message: "",
   });
   const [isFetching, setIsFetching] = useState(false);
-  const accessToken = useSelector((state) => state.authorization.accessToken);
-  const dispatch = useDispatch();
+
   useEffect(() => {
     setResponseWarning({ status: false, message: "" });
     if (oldPassword.length >= 6) {
@@ -69,26 +71,14 @@ const PasswordScreen = () => {
       newPasswordConfirm.length >= 6
     ) {
       setIsFetching(true);
-      const url =
-        "https://geo-meta-rest-api.vercel.app/api/profile/changePassword";
-      const response = await fetch(url, {
-        method: "POST",
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, *same-origin, omit
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({
-          oldPassword: oldPassword,
-          newPassword: newPassword,
-          newPasswordConfirm: newPasswordConfirm,
-        }),
-      });
-      const data = await response.json();
+      const data = await changePassword(
+        accessToken,
+        oldPassword,
+        newPassword,
+        newPasswordConfirm
+      );
       setIsFetching(false);
       if (data.message === "Password changed") {
-        // setResponseMessage({ status: true, message: "Password changed" });
         await AsyncStorage.removeItem("accessToken");
         await AsyncStorage.setItem("accessToken", data.body.accessToken);
         dispatch(updateAccessToken(data.body.accessToken));
