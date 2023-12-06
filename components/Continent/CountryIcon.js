@@ -1,9 +1,9 @@
 import { Pressable, Image, Text, StyleSheet } from "react-native";
-const CountryIconBox = ({ onPress, image, country }) => {
+const CountryIcon = ({ onPress, countryIcon, countryName }) => {
   return (
     <Pressable style={styles.countryBox} onPress={onPress}>
-      <Image style={styles.image} source={image} />
-      <Text style={styles.text}>{country}</Text>
+      <Image style={styles.image} source={countryIcon} />
+      <Text style={styles.text}>{countryName}</Text>
     </Pressable>
   );
 };
@@ -27,4 +27,4 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
 });
-export default CountryIconBox;
+export default CountryIcon;

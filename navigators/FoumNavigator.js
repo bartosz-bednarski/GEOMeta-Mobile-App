@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import ForumMenuScreen from "../screens/Forum/ForumMenuScreen";
+import ForumScreen from "../screens/Forum/ForumScreen";
 import HeaderIcon from "../ui/HeaderIcon";
-import AddNewTopicScreen from "../screens/Forum/AddNewTopicScreen";
-import TopicComments from "../screens/Forum/TopicComments";
+import NewTopicScreen from "../screens/Forum/NewTopicScreen";
+import TopicScreen from "../screens/Forum/TopicScreen";
 const ForumNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
@@ -18,21 +18,21 @@ const ForumNavigator = () => {
       }}
     >
       <Stack.Screen
-        component={ForumMenuScreen}
+        component={ForumScreen}
         name="ForumMenu"
         options={{
           headerTitle: "Forum",
         }}
       />
       <Stack.Screen
-        component={AddNewTopicScreen}
+        component={NewTopicScreen}
         name="AddNewTopic"
         options={{
           headerTitle: "Dodaj nowy temat",
         }}
       />
       <Stack.Screen
-        component={TopicComments}
+        component={TopicScreen}
         name="TopicComments"
         options={{
           headerTitle: "",

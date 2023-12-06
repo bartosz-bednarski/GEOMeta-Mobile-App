@@ -2,11 +2,14 @@ import { Text, View, StyleSheet, ScrollView } from "react-native";
 import AddTopicMenu from "../../components/Forum/AddTopicMenu";
 import TopicMenu from "../../components/Forum/TopicMenu";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LoaderOverlay from "../../ui/LoaderOverlay";
+import { dataUpdated } from "../../redux/forum-reducer";
 
-const ForumMenuScreen = ({ route, navigation }) => {
+const ForumScreen = ({ route, navigation }) => {
+  const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.authorization.accessToken);
+  const forumUpdate = useSelector((state) => state.forum.update);
   const [isFetching, setIsFetching] = useState(false);
   const [fetchedTopics, setFetchedTopics] = useState("");
   const getTopics = async () => {
@@ -27,10 +30,11 @@ const ForumMenuScreen = ({ route, navigation }) => {
     const data = await response.json();
     setFetchedTopics(data.data);
     setIsFetching(false);
+    dispatch(dataUpdated());
   };
   useEffect(() => {
     getTopics();
-  }, []);
+  }, [forumUpdate]);
   if (isFetching) {
     return <LoaderOverlay />;
   }
@@ -76,4 +80,4 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
 });
-export default ForumMenuScreen;
+export default ForumScreen;

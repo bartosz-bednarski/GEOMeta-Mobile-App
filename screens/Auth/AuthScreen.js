@@ -1,7 +1,7 @@
-import { Text, View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import GeoMetaIconL from "../../ui/svg/GeoMetaIconL";
 import Button from "../../ui/Button";
-const AuthScreen = ({ route, navigation }) => {
+const AuthScreen = ({ navigation }) => {
   return (
     <View style={styles.authContainer}>
       <GeoMetaIconL />

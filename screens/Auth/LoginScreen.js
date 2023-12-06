@@ -41,11 +41,10 @@ const LoginScreen = ({ navigation }) => {
       setIsFetching(true);
       const response = await fetch(
         "https://geo-meta-rest-api.vercel.app/api/users/login",
-        // "http://localhost:9001/api/users/login",
         {
           method: "POST",
-          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-          credentials: "same-origin", // include, *same-origin, omit
+          cache: "no-cache",
+          credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
           },

@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import QuizMenuScreen from "../screens/Quiz/QuizMenuScreen";
 import QuizScreen from "../screens/Quiz/QuizScreen";
+import QuizGameScreen from "../screens/Quiz/QuizGameScreen";
 import HeaderIcon from "../ui/HeaderIcon";
 const QuizNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -19,14 +19,14 @@ const QuizNavigator = () => {
     >
       <Stack.Screen
         name="QuizMenu"
-        component={QuizMenuScreen}
+        component={QuizScreen}
         options={{
           headerTitle: "Quiz",
         }}
       />
       <Stack.Screen
         name="QuizType"
-        component={QuizScreen}
+        component={QuizGameScreen}
         options={{
           headerShown: false,
           headerTitle: "",

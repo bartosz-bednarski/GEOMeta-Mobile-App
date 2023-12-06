@@ -1,8 +1,6 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { useState, useEffect } from "react";
-import Input from "../../ui/Input";
 import Button from "../../ui/Button";
-import { KeyboardAvoidingView } from "react-native-web";
 import LoaderOverlay from "../../ui/LoaderOverlay";
 import GeoMetaIconL from "../../ui/svg/GeoMetaIconL";
 const RegisterScreen = ({ navigation }) => {
@@ -56,8 +54,8 @@ const RegisterScreen = ({ navigation }) => {
         "https://geo-meta-rest-api.vercel.app/api/users/register",
         {
           method: "POST",
-          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-          credentials: "same-origin", // include, *same-origin, omit
+          cache: "no-cache",
+          credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
           },

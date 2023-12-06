@@ -1,93 +1,25 @@
 import { useLayoutEffect, useState } from "react";
 import { View, Text, FlatList, StyleSheet, Image } from "react-native";
 import LoaderOverlay from "../../ui/LoaderOverlay";
-import Europe from "../../ui/svg/continents/Europe";
-import CountryIconBox from "../../components/Continent/CountryIconBox";
-// import africa from "../../assets/continents/";
+import CountryIcon from "../../components/Continent/CountryIcon";
+import {
+  importCountriesIcons,
+  fetchContinentData,
+} from "../../components/Continent/continentHelper";
 const ContinentScreen = ({ navigation, route }) => {
-  let continentId = route.params.continentId;
-  function importAll(r) {
-    let images = {};
-    r.keys().map((item, index) => {
-      images[item.replace("./", "")] = r(item);
-    });
-
-    return images;
-  }
-  let images;
-
-  if (continentId === "northAmerica") {
-    images = importAll(
-      require.context(
-        "../../assets/continent/northAmerica",
-        false,
-        /\.(webp|jpe?g|svg)$/
-      )
-    );
-  }
-  if (continentId === "southAmerica") {
-    images = importAll(
-      require.context(
-        "../../assets/continent/southAmerica",
-        false,
-        /\.(webp|jpe?g|svg)$/
-      )
-    );
-  }
-  if (continentId === "africa") {
-    images = importAll(
-      require.context(
-        "../../assets/continent/africa",
-        false,
-        /\.(webp|jpe?g|svg)$/
-      )
-    );
-  }
-  if (continentId === "europe") {
-    images = importAll(
-      require.context(
-        "../../assets/continent/europe",
-        false,
-        /\.(webp|jpe?g|svg)$/
-      )
-    );
-  }
-  if (continentId === "asia") {
-    images = importAll(
-      require.context(
-        "../../assets/continent/asia",
-        false,
-        /\.(webp|jpe?g|svg)$/
-      )
-    );
-  }
-  if (continentId === "oceania") {
-    images = importAll(
-      require.context(
-        "../../assets/continent/oceania",
-        false,
-        /\.(webp|jpe?g|svg)$/
-      )
-    );
-  }
-
+  const continentId = route.params.continentId;
+  const countriesIcons = importCountriesIcons(continentId);
   const [continentData, setContinentData] = useState("");
   const [isFetching, setIsFetching] = useState(true);
-  const fetchContinentData = async () => {
-    const response = await fetch(
-      `https://geo-meta-rest-api.vercel.app/api/continents/${continentId}`,
-      { mode: "cors" }
-    );
-    const data = await response.json();
-    const dataMod = data.data.map((obj) => {
-      return { country: obj.country, img: obj.img.replace("svg", "webp") };
-    });
-    setContinentData(dataMod);
+
+  const getDataHandler = async (continentId) => {
+    setIsFetching(true);
+    setContinentData(await fetchContinentData(continentId));
     setIsFetching(false);
-    console.log("data", dataMod);
   };
+
   useLayoutEffect(() => {
-    fetchContinentData();
+    getDataHandler(continentId);
   }, []);
   if (isFetching) {
     return <LoaderOverlay />;
@@ -106,9 +38,10 @@ const ContinentScreen = ({ navigation, route }) => {
         key={(item) => item.country}
         renderItem={(item) => {
           return (
-            <CountryIconBox
-              image={images[item.item.img]}
-              country={item.item.country}
+            <CountryIcon
+              countryIcon={countriesIcons[item.item.img]}
+              countryName={item.item.country}
+              key={(item) => item.country}
               onPress={() =>
                 navigation.navigate("Country", {
                   header: item.item.country,
@@ -116,7 +49,6 @@ const ContinentScreen = ({ navigation, route }) => {
               }
             />
           );
-          // <Text style={{ color: "black" }}>{item.item.country}</Text>;
         }}
       />
     </View>

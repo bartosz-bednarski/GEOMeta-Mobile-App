@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
+import { Ionicons } from "@expo/vector-icons";
 const UsernameIcon = ({ size }) => {
   const iconBackgroundColor = useSelector(
     (state) => state.authorization.iconBackgroundColor
@@ -12,27 +13,42 @@ const UsernameIcon = ({ size }) => {
   if (size === "sm") {
     containerStyle = [
       styles.container,
-      { backgroundColor: iconBackgroundColor },
+      {
+        backgroundColor:
+          iconBackgroundColor === "" ? "#2baad7" : iconBackgroundColor,
+      },
     ];
     textStyle = styles.text;
   } else if (size === "lg") {
     containerStyle = [
       styles.container,
       styles.largeContainer,
-      { backgroundColor: iconBackgroundColor },
+      {
+        backgroundColor:
+          iconBackgroundColor === "" ? "#2baad7" : iconBackgroundColor,
+      },
     ];
     textStyle = [styles.text, styles.largeText];
   } else if (size === "md") {
     containerStyle = [
       styles.container,
       styles.mediumContainer,
-      { backgroundColor: iconBackgroundColor },
+      {
+        backgroundColor:
+          iconBackgroundColor === "" ? "#2baad7" : iconBackgroundColor,
+      },
     ];
     textStyle = [styles.text, styles.mediumText];
   }
   return (
     <View style={containerStyle}>
-      <Text style={textStyle}>{usernameShort}</Text>
+      <Text style={textStyle}>
+        {usernameShort === "" ? (
+          <Ionicons name="eye-outline" size={15} color="white" />
+        ) : (
+          usernameShort
+        )}
+      </Text>
     </View>
   );
 };
@@ -45,6 +61,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     elevation: 10,
     shadowColor: "black",
+    backgroundColor: "#2baad7",
   },
   text: {
     fontSize: 12,

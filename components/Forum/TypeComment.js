@@ -1,17 +1,54 @@
 import {
   View,
-  Text,
   TextInput,
   StyleSheet,
   Keyboard,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import { useSelector } from "react-redux";
 import { useState, useLayoutEffect } from "react";
 import UsernameIcon from "../../ui/UsernameIcon";
 import { Ionicons } from "@expo/vector-icons";
-const TypeComment = () => {
+const TypeComment = ({ topicId, onCommentSent, isFetching }) => {
+  const usernameShort = useSelector(
+    (state) => state.authorization.usernameShort
+  );
+  const iconBackgroundColor = useSelector(
+    (state) => state.authorization.iconBackgroundColor
+  );
+  const accessToken = useSelector((state) => state.authorization.accessToken);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const [commentTextInput, setCommentTextInput] = useState("");
+  const [showSpinner, setShowSpinner] = useState(false);
+  const sendCommentHandler = async () => {
+    const url = accessToken
+      ? `https://geo-meta-rest-api.vercel.app/api/forum/${topicId}/createComment/authorized`
+      : `https://geo-meta-rest-api.vercel.app/api/forum/${topicId}/createComment/unauthorized`;
+    if (commentTextInput !== "") {
+      setShowSpinner(true);
+      setCommentTextInput("");
+      Keyboard.dismiss();
+      const response = await fetch(url, {
+        method: "POST",
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+          topic_id: topicId,
+          usernameShort: usernameShort,
+          iconBackgroundColor: iconBackgroundColor,
+          content: commentTextInput,
+        }),
+      });
+      const data = await response.json();
+      setShowSpinner(false);
+      onCommentSent();
+    }
+  };
   useLayoutEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -31,7 +68,6 @@ const TypeComment = () => {
       keyboardDidShowListener.remove();
     };
   }, []);
-  // const usernameShort = useSelector(state=>state.authorization.usernameShort)
   return (
     <View
       style={[
@@ -42,10 +78,26 @@ const TypeComment = () => {
       <View style={styles.iconBox}>
         <UsernameIcon size="sm" />
       </View>
-      <TextInput style={styles.textInput} placeholder="Aa" />
-      <Pressable style={styles.postIconBox}>
-        <Ionicons name="send-outline" color="#E8D7FC" size={24} />
-      </Pressable>
+      <TextInput
+        style={styles.textInput}
+        placeholder="Aa"
+        value={commentTextInput}
+        onChangeText={(text) => setCommentTextInput(text)}
+      />
+      {showSpinner && (
+        <View style={styles.postIconBox}>
+          <ActivityIndicator size="small" />
+        </View>
+      )}
+      {!isFetching ? (
+        <Pressable style={styles.postIconBox} onPress={sendCommentHandler}>
+          <Ionicons name="send-outline" color="#E8D7FC" size={24} />
+        </Pressable>
+      ) : (
+        <View style={styles.postIconBox}>
+          <ActivityIndicator size="small" />
+        </View>
+      )}
     </View>
   );
 };
