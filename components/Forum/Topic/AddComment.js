@@ -8,9 +8,10 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import { useState, useLayoutEffect } from "react";
-import UsernameIcon from "../../ui/UsernameIcon";
+import UsernameIcon from "../../../ui/UsernameIcon";
 import { Ionicons } from "@expo/vector-icons";
-const TypeComment = ({ topicId, onCommentSent, isFetching }) => {
+import { sendComment } from "../forumHelper";
+const AddComment = ({ topicId, onCommentSent, isFetching }) => {
   const usernameShort = useSelector(
     (state) => state.authorization.usernameShort
   );
@@ -21,34 +22,25 @@ const TypeComment = ({ topicId, onCommentSent, isFetching }) => {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const [commentTextInput, setCommentTextInput] = useState("");
   const [showSpinner, setShowSpinner] = useState(false);
+
   const sendCommentHandler = async () => {
-    const url = accessToken
-      ? `https://geo-meta-rest-api.vercel.app/api/forum/${topicId}/createComment/authorized`
-      : `https://geo-meta-rest-api.vercel.app/api/forum/${topicId}/createComment/unauthorized`;
     if (commentTextInput !== "") {
       setShowSpinner(true);
-      setCommentTextInput("");
       Keyboard.dismiss();
-      const response = await fetch(url, {
-        method: "POST",
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, *same-origin, omit
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({
-          topic_id: topicId,
-          usernameShort: usernameShort,
-          iconBackgroundColor: iconBackgroundColor,
-          content: commentTextInput,
-        }),
-      });
-      const data = await response.json();
+      const newComment = {
+        topic_id: topicId,
+        usernameShort: usernameShort,
+        iconBackgroundColor: iconBackgroundColor,
+        content: commentTextInput,
+      };
+
+      await sendComment(accessToken, topicId, newComment);
+      setCommentTextInput("");
       setShowSpinner(false);
       onCommentSent();
     }
   };
+
   useLayoutEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -71,7 +63,7 @@ const TypeComment = ({ topicId, onCommentSent, isFetching }) => {
   return (
     <View
       style={[
-        styles.typeCommentContainer,
+        styles.addCommentContainer,
         { height: isKeyboardVisible ? "12%" : "8%" },
       ]}
     >
@@ -102,7 +94,7 @@ const TypeComment = ({ topicId, onCommentSent, isFetching }) => {
   );
 };
 const styles = StyleSheet.create({
-  typeCommentContainer: {
+  addCommentContainer: {
     height: "8%",
     width: "100%",
     backgroundColor: "#340867",
@@ -128,4 +120,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-export default TypeComment;
+export default AddComment;

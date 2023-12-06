@@ -1,6 +1,6 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { Text, Pressable, StyleSheet } from "react-native";
 import UsernameIcon from "../../ui/UsernameIcon";
-const AddTopicMenu = ({ navigation }) => {
+const AddTopic = ({ navigation }) => {
   return (
     <Pressable
       style={styles.addTopicContainer}
@@ -31,4 +31,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-export default AddTopicMenu;
+export default AddTopic;

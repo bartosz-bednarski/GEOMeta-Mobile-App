@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import Button from "../../ui/Button";
 import { useState, useEffect } from "react";
 import LoaderOverlay from "../../ui/LoaderOverlay";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { changeShortname } from "../../redux/authStatus-reducer";
-const PersonalScreen = ({ navigation }) => {
+import { postChangeShortname } from "../../components/Profile/profileHelper";
+const PersonalScreen = () => {
   const dispatch = useDispatch();
   const [shortName, setShortName] = useState("");
   const [shortNameWarning, setShortNameWarning] = useState({
@@ -34,25 +34,9 @@ const PersonalScreen = ({ navigation }) => {
     }
     if (shortName.length === 2) {
       setIsFetching(true);
-      const url =
-        "https://geo-meta-rest-api.vercel.app/api/profile/changeShortname";
-      const response = await fetch(url, {
-        method: "POST",
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, *same-origin, omit
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({
-          usernameShort: shortName,
-        }),
-      });
-      const data = await response.json();
+      const data = await postChangeShortname(accessToken, shortName);
       setIsFetching(false);
       if (data.message === "ok") {
-        await AsyncStorage.removeItem("usernameShort");
-        await AsyncStorage.setItem("usernameShort", data.body.usernameShort);
         dispatch(changeShortname(data.body.usernameShort));
         setShortName("");
       }

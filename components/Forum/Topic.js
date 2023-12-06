@@ -1,6 +1,6 @@
 import { Pressable, Text, StyleSheet, View } from "react-native";
-import TopicRecentAnswers from "./TopicRecentAnswers";
-const TopicMenu = ({
+import RecentAnswers from "./RecentAnswers";
+const Topic = ({
   id,
   comments,
   commentsSum,
@@ -17,7 +17,7 @@ const TopicMenu = ({
     });
   };
   return (
-    <Pressable style={styles.topicMenuContainer} onPress={topicOnPressHandler}>
+    <Pressable style={styles.topicContainer} onPress={topicOnPressHandler}>
       <View style={styles.headerContainer}>
         <Text
           style={[
@@ -31,13 +31,13 @@ const TopicMenu = ({
         <Text style={styles.headerText}>{author.username}</Text>
       </View>
       <Text style={styles.topicText}>{topic}</Text>
-      <TopicRecentAnswers comments={comments} commentsSum={commentsSum} />
+      <RecentAnswers comments={comments} commentsSum={commentsSum} />
       <Text style={styles.time}>{time}</Text>
     </Pressable>
   );
 };
 const styles = StyleSheet.create({
-  topicMenuContainer: {
+  topicContainer: {
     paddingBottom: 40,
     paddingHorizontal: 10,
     paddingTop: 30,
@@ -84,4 +84,4 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
 });
-export default TopicMenu;
+export default Topic;

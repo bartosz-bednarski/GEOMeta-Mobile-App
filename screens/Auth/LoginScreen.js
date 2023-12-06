@@ -1,11 +1,11 @@
-import { View, Text, StyleSheet, TextInput, AsyncS } from "react-native";
+import { View, Text, StyleSheet, TextInput } from "react-native";
 import { useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "../../ui/Button";
 import LoaderOverlay from "../../ui/LoaderOverlay";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/authStatus-reducer";
 import GeoMetaIconL from "../../ui/svg/GeoMetaIconL";
+import { loginUser } from "../../components/Auth/authHelper";
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
@@ -39,19 +39,7 @@ const LoginScreen = ({ navigation }) => {
     }
     if (username.length > 0 && password.length >= 6) {
       setIsFetching(true);
-      const response = await fetch(
-        "https://geo-meta-rest-api.vercel.app/api/users/login",
-        {
-          method: "POST",
-          cache: "no-cache",
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username: username, password: password }),
-        }
-      );
-      const data = await response.json();
+      const data = await loginUser(username, password);
       setIsFetching(false);
 
       if (data.message === "Login or password too short") {
@@ -69,14 +57,6 @@ const LoginScreen = ({ navigation }) => {
         setPassword("");
       }
       if (data.message === "loggedIn") {
-        AsyncStorage.setItem("accessToken", data.body.accessToken);
-        AsyncStorage.setItem("email", data.body.email);
-        AsyncStorage.setItem(
-          "iconBackgroundColor",
-          data.body.iconBackgroundColor
-        );
-        AsyncStorage.setItem("username", data.body.username);
-        AsyncStorage.setItem("usernameShort", data.body.usernameShort);
         dispatch(
           login({
             accessToken: data.body.accessToken,

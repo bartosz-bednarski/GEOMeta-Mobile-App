@@ -6,36 +6,21 @@ import ScoreQuestion from "./ui/ScoreQuestion";
 import Button from "../../ui/Button";
 import LoaderOverlay from "../../ui/LoaderOverlay";
 import { updateAchievements } from "../../redux/achievements-reducer";
+import { postQuizAnswers } from "./quizHelper";
 const QuizScore = ({ quizType, questions, navigation }) => {
   const dispatch = useDispatch();
   const [isFetching, setIsFetching] = useState(false);
   const accessToken = useSelector((state) => state.authorization.accessToken);
   const answersUser = useSelector((state) => state.quiz.answers);
-
   const [response, setResponse] = useState("");
+
   const postAnswersHTTP = async (route, accessToken, answersUser) => {
     setIsFetching(true);
-    const url = accessToken
-      ? `https://geo-meta-rest-api.vercel.app/api/quiz/post${route}/auth`
-      : `https://geo-meta-rest-api.vercel.app/api/quiz/post${route}`;
-    console.log(url);
-    const response = await fetch(url, {
-      method: "POST",
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, *same-origin, omit
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(answersUser),
-    });
-    const data = await response.json();
+    const data = await postQuizAnswers(route, accessToken, answersUser);
     dispatch(updateAchievements());
     setIsFetching(false);
     if ((data.message = "ok")) {
       setResponse(data.data);
-      // dispatch(updateAchievements());
-      //   setServerResponse(data.data);
     }
   };
   useLayoutEffect(() => {

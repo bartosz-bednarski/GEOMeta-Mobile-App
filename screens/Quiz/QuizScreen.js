@@ -1,11 +1,10 @@
-import { View, StyleSheet, Text, Pressable } from "react-native";
-import Button from "../../ui/Button";
-import Tile from "../../ui/Tile";
-const QuizScreen = ({ navigation, route }) => {
+import { View, StyleSheet } from "react-native";
+import { default as QuizIcon } from "../../ui/Tile";
+const QuizScreen = ({ navigation }) => {
   return (
     <View style={styles.continentsContainer}>
       <View style={styles.rowContainer}>
-        <Tile
+        <QuizIcon
           content="image"
           image={require("../../assets/country/flags/greatBritain.webp")}
           header="Flagi"
@@ -16,7 +15,7 @@ const QuizScreen = ({ navigation, route }) => {
             })
           }
         />
-        <Tile
+        <QuizIcon
           content="image"
           image={require("../../assets/country/emblems/greatBritain.webp")}
           header="Herby"
@@ -29,7 +28,7 @@ const QuizScreen = ({ navigation, route }) => {
         />
       </View>
       <View style={styles.rowContainer}>
-        <Tile
+        <QuizIcon
           content="image"
           image={require("../../assets/country/plates/bolivia.jpg")}
           header="Rejestracje"

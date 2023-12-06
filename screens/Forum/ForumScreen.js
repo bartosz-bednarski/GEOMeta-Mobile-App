@@ -1,39 +1,28 @@
-import { Text, View, StyleSheet, ScrollView } from "react-native";
-import AddTopicMenu from "../../components/Forum/AddTopicMenu";
-import TopicMenu from "../../components/Forum/TopicMenu";
+import { View, StyleSheet, ScrollView } from "react-native";
+import AddTopic from "../../components/Forum/AddTopic";
+import Topic from "../../components/Forum/Topic";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LoaderOverlay from "../../ui/LoaderOverlay";
 import { dataUpdated } from "../../redux/forum-reducer";
+import { getTopics } from "../../components/Forum/forumHelper";
 
-const ForumScreen = ({ route, navigation }) => {
+const ForumScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.authorization.accessToken);
   const forumUpdate = useSelector((state) => state.forum.update);
   const [isFetching, setIsFetching] = useState(false);
   const [fetchedTopics, setFetchedTopics] = useState("");
-  const getTopics = async () => {
+
+  const getTopicsHandler = async (accessToken) => {
     setIsFetching(true);
-    const response = await fetch(
-      "https://geo-meta-rest-api.vercel.app/api/forum/getTopics",
-      // "http://localhost:9001/api/forum/getTopics",
-      {
-        method: "GET",
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, *same-origin, omit
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    const data = await response.json();
-    setFetchedTopics(data.data);
+    setFetchedTopics(await getTopics(accessToken));
     setIsFetching(false);
     dispatch(dataUpdated());
   };
+
   useEffect(() => {
-    getTopics();
+    getTopicsHandler(accessToken);
   }, [forumUpdate]);
   if (isFetching) {
     return <LoaderOverlay />;
@@ -41,23 +30,27 @@ const ForumScreen = ({ route, navigation }) => {
   return (
     <ScrollView>
       <View style={styles.forumContainer}>
-        <AddTopicMenu navigation={navigation} />
+        {accessToken !== "" && <AddTopic navigation={navigation} />}
 
         {fetchedTopics != "" &&
           fetchedTopics.map((topic) => {
             return (
-              <TopicMenu
+              <Topic
                 id={topic.topic_id}
                 key={topic._id}
                 topic={topic.topic}
                 comments={topic.comments
                   .slice(topic.comments.length - 3)
                   .reverse()}
-                commentsSum={topic.comments.length}
+                commentsSum={
+                  topic.comments.length > 0 ? topic.comments.length : 0
+                }
                 time={
-                  topic.comments[topic.comments.length - 1].date +
-                  " " +
-                  topic.comments[topic.comments.length - 1].time
+                  topic.comments.length > 0
+                    ? topic.comments[topic.comments.length - 1].date +
+                      " " +
+                      topic.comments[topic.comments.length - 1].time
+                    : topic.latestUpdate
                 }
                 author={{
                   username: topic.username,

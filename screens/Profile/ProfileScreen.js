@@ -1,16 +1,10 @@
-import { View, Text, StyleSheet, Button } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/authStatus-reducer";
 import Tile from "../../ui/Tile";
 const ProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const logoutHandler = async () => {
-    await AsyncStorage.removeItem("accessToken");
-    await AsyncStorage.removeItem("email");
-    await AsyncStorage.removeItem("iconBackgroundColor");
-    await AsyncStorage.removeItem("username");
-    await AsyncStorage.removeItem("usernameShort");
     dispatch(logout());
   };
   return (

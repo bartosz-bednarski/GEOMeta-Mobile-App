@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Image, Pressable } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { useState, useRef, useEffect } from "react";
 import { setAnswer } from "../../redux/quiz-reducer";

@@ -6,39 +6,19 @@ import QuizQuestion from "../../components/Quiz/QuizQuestion";
 import LoaderOverlay from "../../ui/LoaderOverlay";
 import QuizScore from "../../components/Quiz/QuizScore";
 import { resetQuiz } from "../../redux/quiz-reducer";
+import { getQuizGame } from "../../components/Quiz/quizHelper";
 const QuizGameScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const quizTypeLoader = async (route) => {
     setIsFetching(true);
     dispatch(resetQuiz());
-    const url = `https://geo-meta-rest-api.vercel.app/api/quiz/get${route}`;
-    const response = await fetch(url, { mode: "cors" });
-    const data = await response.json();
-    const dataMod = data.data.map((question) => {
-      return {
-        ...question,
-        data: question.data.map((img) => {
-          if (route === "Flags") {
-            return { country_flag: img.country_flag.replace("svg", "webp") };
-          } else if (route === "Emblems") {
-            return {
-              country_emblem: img.emblem.replace("svg", "webp"),
-            };
-          } else if (route === "Plates") {
-            return {
-              country_plate: img.plate.replace("svg", "webp"),
-            };
-          }
-        }),
-      };
-    });
-    // dispatch(setQuestions(dataMod));
-    setDataQuestions(dataMod);
+    const data = await getQuizGame(route);
+    setDataQuestions(data);
     setActualQuestion({
-      id: dataMod[0].id,
-      question: dataMod[0].question,
-      answers: dataMod[0].data,
-      correctAnswer: dataMod[0].answer,
+      id: data[0].id,
+      question: data[0].question,
+      answers: data[0].data,
+      correctAnswer: data[0].answer,
     });
     setIsFetching(false);
   };
@@ -50,7 +30,6 @@ const QuizGameScreen = ({ route, navigation }) => {
     correctAnswer: "",
   });
   const nextQuestion = (nextQuestionNumber) => {
-    // console.log(dataQuestions);
     if (nextQuestionNumber === 5) {
       setActualQuestion({
         id: 5,
