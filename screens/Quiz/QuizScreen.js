@@ -20,11 +20,11 @@ const QuizScreen = ({ navigation }) => {
           image={require("../../assets/country/emblems/greatBritain.webp")}
           header="Herby"
           id="emblems"
-          onPress={() =>
+          onPress={() => {
             navigation.navigate("QuizType", {
               quizType: "Emblems",
-            })
-          }
+            });
+          }}
         />
       </View>
       <View style={styles.rowContainer}>

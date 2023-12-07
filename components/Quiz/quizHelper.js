@@ -38,5 +38,12 @@ export const postQuizAnswers = async (route, accessToken, answersUser) => {
     body: JSON.stringify(answersUser),
   });
   const data = await response.json();
-  return data;
+  const dataMod = {
+    data: {
+      user_correct_answers: data.data.user_correct_answers.slice(0, 5),
+      user_score: data.data.user_score,
+    },
+    message: data.message,
+  };
+  return dataMod;
 };

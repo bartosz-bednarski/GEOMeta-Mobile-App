@@ -72,7 +72,7 @@ const PersonalScreen = () => {
               : [styles.label, styles.labelWarning]
           }
         >
-          Zmień krótką nazwę
+          Zmień krótką nazwę (2 znaki)
         </Text>
         <TextInput
           style={
@@ -84,7 +84,6 @@ const PersonalScreen = () => {
           autoCorrect={false}
           keyboardType="default"
           textContentType="username"
-          placeholder="max 2 znaki"
           placeholderTextColor="white"
           value={shortName}
           onChangeText={(text) => setShortName(text)}
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   tabContainer: {
-    backgroundColor: "#E8D7FC",
+    backgroundColor: "transparent",
     borderRadius: 20,
     width: "100%",
     paddingHorizontal: 15,
@@ -116,21 +115,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 20,
-    elevation: 10,
   },
   username: {
-    color: "#7131B7",
+    color: "#E8D7FC",
     fontSize: 24,
     fontWeight: "600",
     marginTop: 5,
   },
   email: {
-    color: "#7131B7",
+    color: "#E8D7FC",
     fontSize: 16,
     marginTop: 5,
   },
   label: {
-    color: "#7131B7",
+    color: "#E8D7FC",
     fontSize: 14,
     width: "100%",
     textAlign: "left",
@@ -141,8 +139,9 @@ const styles = StyleSheet.create({
     padding: 5,
     color: "white",
     borderRadius: 5,
-    backgroundColor: "#9264C6",
+    backgroundColor: "#C19AED",
     marginVertical: 10,
+    elevation: 5,
   },
   labelWarning: {
     color: "red",

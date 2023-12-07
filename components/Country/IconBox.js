@@ -1,7 +1,7 @@
 import { View, Image, StyleSheet, Text } from "react-native";
-import lowTemperature from "../../assets/country/cold-temperature.webp";
+import lowTemperature from "../../assets/country/cold-temperature.png";
 import mediumTemperature from "../../assets/country/medium-temperature.png";
-import highTemperature from "../../assets/country/fever.webp";
+import highTemperature from "../../assets/country/fever.png";
 import rightHand from "../../assets/country/hand-right-outline.webp";
 import leftHand from "../../assets/country/hand-left-outline.webp";
 const IconBox = ({ temperature, movement, emblem, type }) => {
