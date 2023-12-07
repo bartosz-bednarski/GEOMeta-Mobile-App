@@ -1,5 +1,6 @@
 import { View, Text, Pressable, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import debounce from "debounce";
 const Tile = ({ onPress, icon, header, color, content, image, id }) => {
   return (
     <View style={styles.tileContainer}>
@@ -8,7 +9,7 @@ const Tile = ({ onPress, icon, header, color, content, image, id }) => {
           !pressed ? styles.tileBox : [styles.tileBox, styles.tileBoxPressed]
         }
         id={id}
-        onPress={onPress}
+        onPress={debounce(onPress, 300)}
       >
         {content === "icon" && (
           <Ionicons name={icon} color={color} size={100} />

@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   tabContainer: {
-    backgroundColor: "#E8D7FC",
+    backgroundColor: "transparent",
     borderRadius: 20,
     width: "100%",
     paddingHorizontal: 15,
@@ -202,7 +202,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 20,
-    elevation: 10,
   },
   headerIconBox: {
     width: 80,
@@ -215,7 +214,7 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   label: {
-    color: "#7131B7",
+    color: "#E8D7FC",
     fontSize: 16,
     width: "100%",
     textAlign: "left",
@@ -226,8 +225,9 @@ const styles = StyleSheet.create({
     padding: 5,
     color: "white",
     borderRadius: 5,
-    backgroundColor: "#9264C6",
+    backgroundColor: "#C19AED",
     marginVertical: 10,
+    elevation: 5,
   },
   labelWarning: {
     width: "100%",
