@@ -1,11 +1,19 @@
 import { useLayoutEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Image,
+  ScrollView,
+} from "react-native";
 import LoaderOverlay from "../../ui/LoaderOverlay";
 import CountryIcon from "../../components/Continent/CountryIcon";
 import {
   importCountriesIcons,
   fetchContinentData,
 } from "../../components/Continent/continentHelper";
+import { verticalScale } from "../../util/Dimensions";
 const ContinentScreen = ({ navigation, route }) => {
   const continentId = route.params.continentId;
   const countriesIcons = importCountriesIcons(continentId);
@@ -26,31 +34,35 @@ const ContinentScreen = ({ navigation, route }) => {
   }
   return (
     <View style={styles.continentContainer}>
-      {route.params.headerImage}
+      <View style={styles.headerBox}>{route.params.headerImage}</View>
+
       <Image source={route.params.image} style={styles.continentImg} />
       <Text style={styles.countriesLabel}>Kraje na kontynencie</Text>
-      <FlatList
-        numColumns={4}
-        columnWrapperStyle={{ justifyContent: "flex-start" }}
-        style={styles.countriesBox}
-        data={continentData}
-        keyExtractor={(item) => item.country}
-        key={(item) => item.country}
-        renderItem={(item) => {
-          return (
-            <CountryIcon
-              countryIcon={countriesIcons[item.item.img]}
-              countryName={item.item.country}
-              key={(item) => item.country}
-              onPress={() =>
-                navigation.navigate("Country", {
-                  header: item.item.country,
-                })
-              }
-            />
-          );
-        }}
-      />
+      <View style={styles.countriesBox}>
+        <FlatList
+          // numColumns={4}
+          // columnWrapperStyle={{ justifyContent: "flex-start" }}
+
+          data={continentData}
+          keyExtractor={(item) => item.country}
+          key={(item) => item.country}
+          horizontal
+          renderItem={(item) => {
+            return (
+              <CountryIcon
+                countryIcon={countriesIcons[item.item.img]}
+                countryName={item.item.country}
+                key={(item) => item.country}
+                onPress={() =>
+                  navigation.navigate("Country", {
+                    header: item.item.country,
+                  })
+                }
+              />
+            );
+          }}
+        />
+      </View>
     </View>
   );
 };
@@ -58,12 +70,15 @@ const ContinentScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   continentContainer: {
     backgroundColor: "#7131B7",
-    paddingBottom: 40,
+    paddingBottom: 10,
     paddingHorizontal: 30,
     paddingTop: 30,
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
+  },
+  headerBox: {
+    flex: 3,
   },
   countriesBox: {
     flexDirection: "column",
@@ -79,10 +94,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   continentImg: {
-    marginVertical: 30,
-    width: 250,
-    height: 250,
+    marginTop: 20,
+    flex: 6,
+    width: verticalScale(300),
+    height: verticalScale(300),
     resizeMode: "contain",
+    marginBottom: "auto",
   },
 });
 export default ContinentScreen;

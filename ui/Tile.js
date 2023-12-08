@@ -1,6 +1,15 @@
-import { View, Text, Pressable, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  Image,
+  Dimensions,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import debounce from "debounce";
+import { verticalScale } from "../util/Dimensions";
+const { height } = Dimensions.get("window");
 const Tile = ({ onPress, icon, header, color, content, image, id }) => {
   return (
     <View style={styles.tileContainer}>
@@ -14,9 +23,11 @@ const Tile = ({ onPress, icon, header, color, content, image, id }) => {
         {content === "icon" && (
           <Ionicons name={icon} color={color} size={100} />
         )}
-        {content === "image" && <Image style={[styles.image]} source={image} />}
+        {content === "image" && <Image style={styles.image} source={image} />}
       </Pressable>
-      <Text style={styles.header}>{header}</Text>
+      <Text style={[styles.header, { fontSize: height < 780 ? 10 : 14 }]}>
+        {header}
+      </Text>
     </View>
   );
 };
@@ -27,16 +38,16 @@ const styles = StyleSheet.create({
   },
   tileBox: {
     backgroundColor: "#7B41BB",
-    width: 150,
-    height: 150,
+    width: verticalScale(160),
+    height: verticalScale(160),
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 15,
     elevation: 10,
   },
   image: {
-    width: 140,
-    height: 140,
+    width: verticalScale(160),
+    height: verticalScale(160),
     resizeMode: "contain",
   },
   tileBoxPressed: {

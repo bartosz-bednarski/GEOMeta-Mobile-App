@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "GEOMeta",
-    "slug": "GEOMeta",
+    "slug": "geometa",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#7B41BB"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -23,11 +23,18 @@
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#7B41BB"
+      },
+      "package": "com.bartoszbednarski.geometa"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "cb1d9e40-1199-45a7-ba42-6508a55acdf9"
+      }
+    },
+    "owner": "violentrider"
   }
 }

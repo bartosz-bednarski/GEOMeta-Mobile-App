@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { default as ContinentIcon } from "../../ui/Tile";
 import Europe from "../../ui/svg/continents/Europe";
 import Africa from "../../ui/svg/continents/Africa";
@@ -6,6 +6,7 @@ import Asia from "../../ui/svg/continents/Asia";
 import Oceania from "../../ui/svg/continents/Oceania";
 import NorthAmerica from "../../ui/svg/continents/NorthAmerica";
 import SouthAmerica from "../../ui/svg/continents/SouthAmerica";
+import { verticalScale } from "../../util/Dimensions";
 
 const ContinentsScreen = ({ navigation }) => {
   return (
@@ -106,18 +107,16 @@ const ContinentsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   continentsContainer: {
     backgroundColor: "#7131B7",
-    paddingBottom: 40,
+    paddingBottom: verticalScale(40),
     paddingHorizontal: 30,
+    paddingVertical: 20,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  tileContainer: {
-    backgroundColor: "#9264C6",
-    width: 150,
-    height: 150,
+    gap: 10,
   },
   rowContainer: {
+    flex: 3,
     width: "100%",
     flexDirection: "row",
     alignContent: "center",

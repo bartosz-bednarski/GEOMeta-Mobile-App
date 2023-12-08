@@ -1,8 +1,17 @@
 import ContinentsHeader from "../ui/svg/ContinentsHeader";
 import ForumHeader from "../ui/svg/ForumHeader";
+import GeoMetaIconL from "../ui/svg/GeoMetaIconL";
 import QuizHeader from "../ui/svg/QuizHeader";
 
 export const data = [
+  {
+    id: 0,
+    header: <GeoMetaIconL />,
+    text1:
+      "Twój kompleksowy przewodnik po grze GeoGuessr, który dostarczy Ci niezbędnych narzędzi i wskazówek, abyś mógł odkrywać świat w pełni świadomie i skutecznie!",
+    img: require("../assets/world.png"),
+    text2: "",
+  },
   {
     id: 1,
     header: <ContinentsHeader />,

@@ -4,6 +4,7 @@ import mediumTemperature from "../../assets/country/medium-temperature.png";
 import highTemperature from "../../assets/country/fever.png";
 import rightHand from "../../assets/country/hand-right-outline.webp";
 import leftHand from "../../assets/country/hand-left-outline.webp";
+import { verticalScale } from "../../util/Dimensions";
 const IconBox = ({ temperature, movement, emblem, type }) => {
   let temperatureImg;
   let movementImg;
@@ -57,15 +58,16 @@ const IconBox = ({ temperature, movement, emblem, type }) => {
 
 const styles = StyleSheet.create({
   tileBox: {
-    width: 120,
+    flex: 3,
+    // width: 120,
     marginHorizontal: 2,
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 20,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: verticalScale(100),
+    height: verticalScale(100),
     resizeMode: "contain",
   },
   label: {
