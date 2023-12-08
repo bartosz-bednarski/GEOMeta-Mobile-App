@@ -1,4 +1,5 @@
 import { Pressable, Image, Text, StyleSheet } from "react-native";
+import { moderateScale, verticalScale } from "../../util/Dimensions";
 const CountryIcon = ({ onPress, countryIcon, countryName }) => {
   return (
     <Pressable style={styles.countryBox} onPress={onPress}>
@@ -11,19 +12,19 @@ const styles = StyleSheet.create({
   countryBox: {
     alignItems: "center",
     justifyContent: "flex-start",
-    width: 75,
-    height: 110,
-    marginHorizontal: 5,
+    width: verticalScale(75),
+    height: verticalScale(110),
+    marginHorizontal: 2,
   },
 
   text: {
     textAlign: "center",
     color: "white",
-    fontSize: 12,
+    fontSize: 10,
   },
   image: {
-    width: 60,
-    height: 60,
+    width: verticalScale(60),
+    height: verticalScale(60),
     resizeMode: "contain",
   },
 });
