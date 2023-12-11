@@ -23,6 +23,7 @@ const QuizScoreTab = ({ quizType, score, gamesPlayed }) => {
 };
 const styles = StyleSheet.create({
   tabContainer: {
+    flex: 3,
     backgroundColor: "#E8D7FC",
     borderRadius: 20,
     width: "100%",
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
   rowContainer: {
     width: "100%",
     flexDirection: "row",
-    gap: 40,
+    gap: 20,
     marginVertical: 15,
   },
   rowBox: {

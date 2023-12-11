@@ -21,7 +21,7 @@ const AboutItem = ({ data }) => {
 const styles = StyleSheet.create({
   iconContainer: {
     alignItems: "center",
-    marginVertical: verticalScale(30),
+    marginVertical: verticalScale(37),
   },
   text: {
     color: "white",

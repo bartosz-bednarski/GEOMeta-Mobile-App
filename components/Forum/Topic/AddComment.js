@@ -45,13 +45,13 @@ const AddComment = ({ topicId, onCommentSent, isFetching }) => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
       () => {
-        setKeyboardVisible(true); // or some other action
+        setKeyboardVisible(true);
       }
     );
     const keyboardDidHideListener = Keyboard.addListener(
       "keyboardDidHide",
       () => {
-        setKeyboardVisible(false); // or some other action
+        setKeyboardVisible(false);
       }
     );
 
@@ -62,10 +62,7 @@ const AddComment = ({ topicId, onCommentSent, isFetching }) => {
   }, []);
   return (
     <View
-      style={[
-        styles.addCommentContainer,
-        { height: isKeyboardVisible ? "12%" : "8%" },
-      ]}
+      style={[styles.addCommentContainer, { flex: isKeyboardVisible ? 2 : 1 }]}
     >
       <View style={styles.iconBox}>
         <UsernameIcon size="sm" />
@@ -95,7 +92,7 @@ const AddComment = ({ topicId, onCommentSent, isFetching }) => {
 };
 const styles = StyleSheet.create({
   addCommentContainer: {
-    height: "8%",
+    flex: 1,
     width: "100%",
     backgroundColor: "#340867",
     paddingHorizontal: 10,

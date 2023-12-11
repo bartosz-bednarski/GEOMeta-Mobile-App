@@ -32,6 +32,7 @@ const RegisterScreen = ({ navigation }) => {
       setEmailWarning({ status: false, message: "" });
     }
   }, [username, password, email]);
+
   const submitHandler = async () => {
     if (username.length === 0) {
       setUsernameWarning({
@@ -169,6 +170,7 @@ const RegisterScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   registerContainer: {
     backgroundColor: "#7131B7",
+    paddingTop: 60,
     paddingBottom: 40,
     paddingHorizontal: 30,
     flex: 1,
@@ -176,7 +178,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   label: {
-    marginTop: 30,
+    marginTop: 10,
     textAlign: "left",
     width: "100%",
     color: "white",

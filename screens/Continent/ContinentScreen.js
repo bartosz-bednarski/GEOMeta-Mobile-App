@@ -1,12 +1,5 @@
 import { useLayoutEffect, useState } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  Image,
-  ScrollView,
-} from "react-native";
+import { View, Text, FlatList, StyleSheet, Image } from "react-native";
 import LoaderOverlay from "../../ui/LoaderOverlay";
 import CountryIcon from "../../components/Continent/CountryIcon";
 import {

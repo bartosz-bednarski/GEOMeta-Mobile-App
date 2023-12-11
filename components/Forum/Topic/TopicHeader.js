@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "white",
     paddingHorizontal: 10,
-    width: "80%",
+    width: "90%",
   },
 });
 export default TopicHeader;
