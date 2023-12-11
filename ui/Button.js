@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: "white",
     paddingVertical: 15,
-    paddingHorizontal: 60,
+    paddingHorizontal: 40,
     borderRadius: 10,
     shadowColor: "black",
     shadowRadius: 2,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowOffset: { width: 2, height: 2 },
     marginVertical: 30,
-    width: 230,
+    width: 180,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   text: {
-    fontSize: 16,
+    fontSize: 14,
     color: "white",
     fontWeight: "600",
     textAlign: "center",

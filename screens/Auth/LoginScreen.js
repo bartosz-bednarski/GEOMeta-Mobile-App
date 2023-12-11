@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, TextInput } from "react-native";
-import { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TextInput, Keyboard } from "react-native";
+import { useState, useEffect, useLayoutEffect } from "react";
 import Button from "../../ui/Button";
 import LoaderOverlay from "../../ui/LoaderOverlay";
 import { useDispatch } from "react-redux";
@@ -8,6 +8,7 @@ import GeoMetaIconL from "../../ui/svg/GeoMetaIconL";
 import { loginUser } from "../../components/Auth/authHelper";
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameWarning, setUsernameWarning] = useState({
@@ -27,6 +28,25 @@ const LoginScreen = ({ navigation }) => {
       setPasswordWarning({ status: false, message: "" });
     }
   }, [username, password]);
+  useLayoutEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setKeyboardVisible(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardVisible(false);
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
   const submitHandler = async () => {
     if (username.length === 0) {
       setUsernameWarning({
@@ -74,8 +94,13 @@ const LoginScreen = ({ navigation }) => {
     return <LoaderOverlay />;
   }
   return (
-    <View style={styles.loginContainer}>
-      <GeoMetaIconL />
+    <View
+      style={[
+        styles.loginContainer,
+        { paddingTop: isKeyboardVisible ? 70 : 0 },
+      ]}
+    >
+      {!isKeyboardVisible && <GeoMetaIconL />}
       <Text
         style={
           usernameWarning.status
@@ -145,7 +170,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   label: {
-    marginTop: 30,
+    marginTop: 20,
     textAlign: "left",
     width: "100%",
     color: "white",

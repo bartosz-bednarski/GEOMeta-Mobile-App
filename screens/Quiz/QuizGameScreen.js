@@ -1,7 +1,5 @@
 import { useLayoutEffect, useState } from "react";
-import { View, Text, Button } from "react-native";
 import { useDispatch } from "react-redux";
-import { setQuestions } from "../../redux/quiz-reducer";
 import QuizQuestion from "../../components/Quiz/QuizQuestion";
 import LoaderOverlay from "../../ui/LoaderOverlay";
 import QuizScore from "../../components/Quiz/QuizScore";

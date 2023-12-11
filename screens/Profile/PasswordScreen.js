@@ -1,7 +1,14 @@
-import { Text, View, StyleSheet, TextInput, Alert } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  Alert,
+  Keyboard,
+} from "react-native";
 import Button from "../../ui/Button";
 import { Ionicons } from "@expo/vector-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSelector, useDispatch } from "react-redux";
 import { updateAccessToken } from "../../redux/authStatus-reducer";
@@ -10,6 +17,7 @@ import { changePassword } from "../../components/Profile/profileHelper";
 const PasswordScreen = () => {
   const accessToken = useSelector((state) => state.authorization.accessToken);
   const dispatch = useDispatch();
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
@@ -30,7 +38,25 @@ const PasswordScreen = () => {
     message: "",
   });
   const [isFetching, setIsFetching] = useState(false);
+  useLayoutEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setKeyboardVisible(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardVisible(false);
+      }
+    );
 
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
   useEffect(() => {
     setResponseWarning({ status: false, message: "" });
     if (oldPassword.length >= 6) {
@@ -113,9 +139,11 @@ const PasswordScreen = () => {
   return (
     <View style={styles.passwordContainer}>
       <View style={styles.tabContainer}>
-        <View style={styles.headerIconBox}>
-          <Ionicons name="lock-closed" color="white" size={40} />
-        </View>
+        {!isKeyboardVisible && (
+          <View style={styles.headerIconBox}>
+            <Ionicons name="lock-closed" color="white" size={40} />
+          </View>
+        )}
         <Text style={styles.label}>Wprowadź stare hasło:</Text>
         <TextInput
           style={[
@@ -215,13 +243,13 @@ const styles = StyleSheet.create({
   },
   label: {
     color: "#E8D7FC",
-    fontSize: 16,
+    fontSize: 14,
     width: "100%",
     textAlign: "left",
   },
   input: {
     width: "100%",
-    height: 40,
+    height: 35,
     padding: 5,
     color: "white",
     borderRadius: 5,

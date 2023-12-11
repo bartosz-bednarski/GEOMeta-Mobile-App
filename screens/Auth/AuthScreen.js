@@ -1,6 +1,7 @@
 import { View, StyleSheet, Image } from "react-native";
 import GeoMetaIconL from "../../ui/svg/GeoMetaIconL";
 import Button from "../../ui/Button";
+import { verticalScale } from "../../util/Dimensions";
 const AuthScreen = ({ navigation }) => {
   return (
     <View style={styles.authContainer}>
@@ -12,6 +13,7 @@ const AuthScreen = ({ navigation }) => {
           navigation.navigate("Login");
         }}
         color="purple"
+        styling={{ marginVertical: 5 }}
       />
       <Button
         title="Utwórz Konto"
@@ -19,6 +21,7 @@ const AuthScreen = ({ navigation }) => {
         onPress={() => {
           navigation.navigate("Register");
         }}
+        styling={{ marginVertical: 5 }}
       />
     </View>
   );
@@ -34,8 +37,8 @@ const styles = StyleSheet.create({
   },
   image: {
     marginVertical: 30,
-    width: 250,
-    height: 250,
+    width: verticalScale(250),
+    height: verticalScale(250),
   },
 });
 

@@ -1,4 +1,5 @@
 import { Pressable, Image, StyleSheet } from "react-native";
+import { verticalScale } from "../../../util/Dimensions";
 
 const Answer = ({ answer, id, onPress, quizType }) => {
   function importAll(r) {
@@ -66,14 +67,14 @@ const styles = StyleSheet.create({
     flexGrow: 2,
   },
   flagImg: {
-    width: 160,
-    height: 100,
+    width: verticalScale(160),
+    height: verticalScale(100),
     borderRadius: 10,
     resizeMode: "contain",
   },
   emblemImg: {
-    width: 160,
-    height: 160,
+    width: verticalScale(160),
+    height: verticalScale(160),
     borderRadius: 10,
     resizeMode: "contain",
   },

@@ -60,34 +60,36 @@ const TopicScreen = ({ navigation, route }) => {
   }
   return (
     <View style={styles.commentsContainer}>
-      <ScrollView
-        ref={scrollView}
-        onContentSizeChange={() =>
-          scrollView.current.scrollToEnd({ animated: true })
-        }
-        style={[
-          styles.scrollView,
-          { height: isKeyboardVisible ? "82%" : "88.5%" },
-        ]}
-      >
-        <View style={styles.commentsBox}>
-          <TopicHeader topic={topic} topicAuthor={topicAuthor} />
-          {commentsFetched !== "" &&
-            commentsFetched.map((comment) => (
-              <Comment
-                content={comment.content}
-                date={comment.dateString + " " + comment.timeString}
-                author={{
-                  username: comment.username,
-                  usernameShort: comment.usernameShort,
-                  iconBackgroundColor: comment.iconBackgroundColor,
-                }}
-                comment_id={comment.comment_id}
-                key={comment.comment_id}
-              />
-            ))}
-        </View>
-      </ScrollView>
+      <View style={styles.scrollViewBox}>
+        <ScrollView
+          ref={scrollView}
+          onContentSizeChange={() =>
+            scrollView.current.scrollToEnd({ animated: true })
+          }
+          style={[
+            styles.scrollView,
+            { height: isKeyboardVisible ? "82%" : "88.5%" },
+          ]}
+        >
+          <View style={styles.commentsBox}>
+            <TopicHeader topic={topic} topicAuthor={topicAuthor} />
+            {commentsFetched !== "" &&
+              commentsFetched.map((comment) => (
+                <Comment
+                  content={comment.content}
+                  date={comment.dateString + " " + comment.timeString}
+                  author={{
+                    username: comment.username,
+                    usernameShort: comment.usernameShort,
+                    iconBackgroundColor: comment.iconBackgroundColor,
+                  }}
+                  comment_id={comment.comment_id}
+                  key={comment.comment_id}
+                />
+              ))}
+          </View>
+        </ScrollView>
+      </View>
       <AddComment
         topicId={topicId}
         onCommentSent={() => {
@@ -101,12 +103,15 @@ const TopicScreen = ({ navigation, route }) => {
 };
 const styles = StyleSheet.create({
   commentsContainer: {
+    flex: 1,
     backgroundColor: "#7131B7",
     paddingBottom: 0,
     paddingHorizontal: 0,
   },
+  scrollViewBox: {
+    flex: 9,
+  },
   scrollView: {
-    height: "88.5%",
     paddingHorizontal: 10,
     marginTop: "5%",
     marginBottom: "1%",

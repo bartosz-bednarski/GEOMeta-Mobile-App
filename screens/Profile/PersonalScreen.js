@@ -1,8 +1,8 @@
-import { Text, View, StyleSheet, TextInput } from "react-native";
+import { Text, View, StyleSheet, TextInput, Keyboard } from "react-native";
 import UsernameIcon from "../../ui/UsernameIcon";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "../../ui/Button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import LoaderOverlay from "../../ui/LoaderOverlay";
 import { changeShortname } from "../../redux/authStatus-reducer";
 import { postChangeShortname } from "../../components/Profile/profileHelper";
@@ -14,6 +14,7 @@ const PersonalScreen = () => {
     message: "",
   });
   const [isFetching, setIsFetching] = useState(false);
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const username = useSelector((state) => state.authorization.username);
   const email = useSelector((state) => state.authorization.email);
   const accessToken = useSelector((state) => state.authorization.accessToken);
@@ -22,6 +23,25 @@ const PersonalScreen = () => {
       setShortNameWarning({ status: false, message: "" });
     }
   }, [shortName]);
+  useLayoutEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setKeyboardVisible(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardVisible(false);
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
   const submitHandler = async () => {
     if (shortName.length > 2) {
       setShortNameWarning({ status: true, message: "Nazwa jest za długa" });
@@ -59,11 +79,13 @@ const PersonalScreen = () => {
   }
   return (
     <View style={styles.personalContainer}>
-      <View style={styles.tabContainer}>
-        <UsernameIcon size="lg" />
-        <Text style={styles.username}>{username}</Text>
-        <Text style={styles.email}>{email}</Text>
-      </View>
+      {!isKeyboardVisible && (
+        <View style={styles.tabContainer}>
+          <UsernameIcon size="lg" />
+          <Text style={styles.username}>{username}</Text>
+          <Text style={styles.email}>{email}</Text>
+        </View>
+      )}
       <View style={styles.tabContainer}>
         <Text
           style={
