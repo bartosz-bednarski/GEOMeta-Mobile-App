@@ -36,6 +36,6 @@ Bartosz Bednarski
 - e-mail: bartosz.bednarski97@gmail.com
 - linkedIn: https://www.linkedin.com/in/bartosz-bednarski-050196234/
 
-Project Link: [https://github.com/bartosz-bednarski/GEOMeta](https://github.com/bartosz-bednarski/GEOMeta)<br/>
+Project Link: [https://github.com/bartosz-bednarski/GEOMeta-Mobile-App](https://github.com/bartosz-bednarski/GEOMeta-Mobile-App)<br/>
 Expo production file link: [https://expo.dev//accounts/violentrider/projects/geometa/builds/75234863-ede5-4b22-98e1-ac12253ab235](https://expo.dev//accounts/violentrider/projects/geometa/builds/75234863-ede5-4b22-98e1-ac12253ab235)
 
