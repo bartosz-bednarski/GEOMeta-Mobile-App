@@ -24,6 +24,9 @@ Website includes the following screens:<br/>
 
 To check the app on your mobile device please follow the link bellow. Press install and follow the instructions.
 [https://expo.dev//accounts/violentrider/projects/geometa/builds/75234863-ede5-4b22-98e1-ac12253ab235](https://expo.dev//accounts/violentrider/projects/geometa/builds/75234863-ede5-4b22-98e1-ac12253ab235)
+<br />Demo account:<br />
+            - Login: Demo<br />
+            - Password: 123456789
 ## Mobile view
 <img src="/assets/readme/01.png" alt="Logo" width="30%" height="auto"> <img src="/assets/readme/02.png" alt="Logo" width="30%" height="auto"> <img src="/assets/readme/03.png" alt="Logo" width="30%" height="auto">
 <img src="/assets/readme/04.png" alt="Logo" width="30%" height="auto"> <img src="/assets/readme/05.png" alt="Logo" width="30%" height="auto"> <img src="/assets/readme/06.png" alt="Logo" width="30%" height="auto">
